@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Life.h"
+#include <iostream>
 
 int Life::neighbor_count(int row, int col)
 
@@ -48,6 +49,24 @@ Post: The Life object contains a configuration specified by the user.
 */
 
 {
+	/*
+	std::cout << "Enter grid size, maximum 50 x 50 and minimum 10 x 10." << std::endl;
+	int checker = 0;
+	int maxcol = 0; // maxrow and maxcol still as const int in header file
+	int maxrow = 0; 
+	while (checker < 2)
+	{
+		std::cin >> maxrow >> maxcol;
+		if (maxrow >= 10 && maxcol >= 10)
+			checker++;
+		else
+			std::cout << "Gridsize error" << std::endl;
+		if (maxrow <= 50 && maxcol <= 50)
+			checker++;
+		else if(checker == 1)
+			std::cout << "Gridsize error" << std::endl;
+	}
+	*/
 	int row, col;
 	for (row = 0; row <= maxrow + 1; row++)
 		for (col = 0; col <= maxcol + 1; col++)
