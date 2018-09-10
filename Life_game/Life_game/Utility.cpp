@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "Utility.h"
 #include "life.h"
 

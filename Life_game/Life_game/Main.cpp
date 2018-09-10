@@ -28,14 +28,16 @@ int main()  //  Program to play Conway's game of Life.
 			*/
 
 {
+	int time;
+
 	Life configuration;
 	instructions();
 	configuration.initialize();
 	configuration.print();
-	cout << "Continue viewing new generations? " << endl;
+//	cout << "Continue viewing new generations? " << endl;
 	while (user_says_yes()) {
 		configuration.update();
 		configuration.print();
-		cout << "Continue viewing new generations? " << endl;
+	//	cout << "Continue viewing new generations? " << endl;
 	}
 }

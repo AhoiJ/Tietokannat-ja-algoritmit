@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Life.h"
 #include <iostream>
+#include <string>
 
 int Life::neighbor_count(int row, int col)
 
@@ -24,8 +25,8 @@ Post: The Life object contains the next generation of configuration.
 	int row, col;
 	int new_grid[maxrow + 2][maxcol + 2];
 
-	for (row = 1; row <= maxrow; row++)
-		for (col = 1; col <= maxcol; col++)
+	for (row = 1; row <= this -> rows; row++)
+		for (col = 1; col <= this -> cols; col++)
 			switch (neighbor_count(row, col)) {
 			case 2:
 				new_grid[row][col] = grid[row][col];  //  Status stays the same.
@@ -37,8 +38,8 @@ Post: The Life object contains the next generation of configuration.
 				new_grid[row][col] = 0;                //  Cell is now dead.
 			}
 
-	for (row = 1; row <= maxrow; row++)
-		for (col = 1; col <= maxcol; col++)
+	for (row = 0; row <= this -> rows; row++)
+		for (col = 0; col <= this -> cols; col++)
 			grid[row][col] = new_grid[row][col];
 }
 
@@ -49,35 +50,80 @@ Post: The Life object contains a configuration specified by the user.
 */
 
 {
-	/*
-	std::cout << "Enter grid size, maximum 50 x 50 and minimum 10 x 10." << std::endl;
+
+	int row, col;
+	
+	
+	std::cout << "Enter grid size, use the max, maximum 20 x 50 and minimum 10 x 10." << std::endl;
 	int checker = 0;
-	int maxcol = 0; // maxrow and maxcol still as const int in header file
-	int maxrow = 0; 
 	while (checker < 2)
 	{
-		std::cin >> maxrow >> maxcol;
-		if (maxrow >= 10 && maxcol >= 10)
-			checker++;
-		else
-			std::cout << "Gridsize error" << std::endl;
-		if (maxrow <= 50 && maxcol <= 50)
-			checker++;
-		else if(checker == 1)
-			std::cout << "Gridsize error" << std::endl;
+		std::cout << "Number of rows: ";
+		std::cin >> this->rows;
+		std::cout << "Number of cols: ";
+		std::cin >> this -> cols;
+	if (rows >= 10 && cols >= 10)
+	checker++;
+	else
+	std::cout << "Gridsize error" << std::endl;
+	if (rows <= 20 && cols <= 50)
+	checker++;
+	else if(checker == 1)
+	std::cout << "Gridsize error" << std::endl;
 	}
-	*/
-	int row, col;
-	for (row = 0; row <= maxrow + 1; row++)
-		for (col = 0; col <= maxcol + 1; col++)
+
+	/*
+	for (row = 0; row <= rows + 1; row++)
+		for (col = 0; col <= cols + 1; col++)
 			grid[row][col] = 0;
 	std::cout << "List the coordinates for living cells." << std::endl;
 	std::cout << "Terminate the list with the special pair -1 -1" << std::endl;
 	std::cin >> row >> col;
+	*/
+		std::cout << "Fill the board with x or spacebar. " << std::endl;
+		std::string board[maxrow][maxcol];
 
+		for (int i = 0; i < maxrow; i++)
+			for (int u = 0; u < maxcol; u++)
+				board[i][u] = "";
+		
+		for (int i = 0; i < rows; i++)
+			for (int u = 0; u < cols; u++) {
+				if (u % 2 == 0 && i % 2 == 0)
+					board[i][u] = "x"; //	for tests
+				else board[i][u] = " ";
+			//	std::getline(std::cin, board[i][u]);
+	}
+/*	Prints board for tests
+		for (int i = 0; i < rows; i++) {
+			for (int u = 0; u < cols; u++) {
+				std::cout << board[i][u];
+			}
+			std::cout << std::endl;
+		}*/
+
+		for (row = 0; row <= this->rows + 1; row++)
+			for (col = 0; col <= this->cols + 1; col++)
+				grid[row][col] = 0;
+
+
+		// laittaa syötetyn boardin tarkistettavaan gridiin
+		for (int i = 0; i < this -> rows; i++){
+			for (int u = 0; u < this -> cols; u++)
+			{
+				if (board[i][u] == "x")
+					grid[i][u] = 1;
+				else 
+					grid[i][u] = 0;
+
+			}
+		}
+		
+
+	/*
 	while (row != -1 || col != -1) {
-		if (row >= 1 && row <= maxrow)
-			if (col >= 1 && col <= maxcol)
+		if (row >= 1 && row <= this -> rows)
+			if (col >= 1 && col <= this -> cols)
 				grid[row][col] = 1;
 			else
 				std::cout << "Column " << col << " is out of range." << std::endl;
@@ -85,6 +131,7 @@ Post: The Life object contains a configuration specified by the user.
 			std::cout << "Row " << row << " is out of range." << std::endl;
 		std::cin >> row >> col;
 	}
+	*/
 }
 
 
@@ -97,8 +144,8 @@ Post: The configuration is written for the user.
 {
 	int row, col;
 	std::cout << "\nThe current Life configuration is:" << std::endl;
-	for (row = 1; row <= maxrow; row++) {
-		for (col = 1; col <= maxcol; col++)
+	for (row = 1; row <= this -> rows; row++) {
+		for (col = 1; col <= this -> cols; col++)
 			if (grid[row][col] == 1) std::cout << '*';
 			else std::cout << ' ';
 			std::cout << std::endl;
@@ -106,3 +153,7 @@ Post: The configuration is written for the user.
 	std::cout << std::endl;
 }
 
+bool Life::legal_position(int row, int col)
+{
+	return (0 <= row && row < maxrow && 0 <= col && col < maxcol);
+}
