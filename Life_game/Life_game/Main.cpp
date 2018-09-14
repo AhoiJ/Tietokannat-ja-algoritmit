@@ -1,6 +1,8 @@
 #include "Utility.h"
 #include "life.h"
 
+using namespace std;
+
 void instructions()
 /*
 Pre:  None.
@@ -29,15 +31,24 @@ int main()  //  Program to play Conway's game of Life.
 
 {
 	int time;
+	string c = "";
 
 	Life configuration;
 	instructions();
 	configuration.initialize();
 	configuration.print();
-//	cout << "Continue viewing new generations? " << endl;
+	cout << "Continue viewing new generations? " << endl;
+
 	while (user_says_yes()) {
+		cout << "Continue viewing new generations? " << endl;
 		configuration.update();
 		configuration.print();
-	//	cout << "Continue viewing new generations? " << endl;
+
 	}
+	cout << "Would you like to save gamestate? (y/n) " << endl;
+	cin >> c;
+	if (c == "y" || c == "Y")
+		configuration.save();
+
+	
 }

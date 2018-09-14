@@ -7,6 +7,7 @@ public:
 	void initialize();
 	void print();
 	void update();
+	void save();
 private:
 	int rows, cols;
 	int grid[maxrow + 2][maxcol + 2];  //  allows for two extra rows and columns

@@ -1,7 +1,9 @@
 #include <iostream>
 #include "Life.h"
-#include <iostream>
+#include <fstream>
 #include <string>
+
+using namespace std;
 
 int Life::neighbor_count(int row, int col)
 
@@ -41,6 +43,33 @@ Post: The Life object contains the next generation of configuration.
 	for (row = 0; row <= this -> rows; row++)
 		for (col = 0; col <= this -> cols; col++)
 			grid[row][col] = new_grid[row][col];
+}
+
+void Life::save()
+{
+	string board[maxrow][maxcol];
+
+	// riippuen gamestatesta, eli sen update vaiheesta
+	// gridin dead cellit näyttävät negatiivisia virheellisiä lukuja
+
+	for (int i = 0; i < this->rows; i++) {
+		for (int u = 0; u < this->cols; u++)
+		{
+			if (grid[i][u] == 1)
+				board[i][u] = "x";
+			else
+				board[i][u] = " ";
+
+		}
+	}
+
+	std::ofstream out("output.txt");
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int u = 0; u < this->cols; u++)
+		out <<  grid[i][u];
+	}
+	out.close();
 }
 
 void Life::initialize()
@@ -89,9 +118,10 @@ Post: The Life object contains a configuration specified by the user.
 		
 		for (int i = 0; i < rows; i++)
 			for (int u = 0; u < cols; u++) {
-				if (u % 2 == 0 && i % 2 == 0)
+				if (u % 2 == 0 )
 					board[i][u] = "x"; //	for tests
 				else board[i][u] = " ";
+
 			//	std::getline(std::cin, board[i][u]);
 	}
 /*	Prints board for tests
