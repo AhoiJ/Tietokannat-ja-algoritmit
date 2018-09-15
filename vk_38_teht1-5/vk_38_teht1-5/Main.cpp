@@ -3,13 +3,13 @@
 #include <string>
 
 using namespace std;
-
+/* Tehtava 1 -----------------------------------
 int main()
-/*
-Pre:   The user supplies an integer n and n decimal numbers.
-Post:  The numbers are printed in reverse order.
-Uses:  The STL class stack and its methods
-*/
+
+//Pre:   The user supplies an integer n and n decimal numbers.
+//Post:  The numbers are printed in reverse order.
+//Uses:  The STL class stack and its methods
+
 
 {
 	int n;
@@ -23,13 +23,13 @@ Uses:  The STL class stack and its methods
 	//		<< " The numbers will be printed in reverse order." << endl;
 	cout << "enter a word" << endl;
 		//käytettiin 1 a:ssa
-	/*
-		cin >> n;
-		for (int i = 0; i < n; i++) {
-			getline(cin, character);
-			word.push(character);
-		}
-		*/
+	
+//		cin >> n;
+	//	for (int i = 0; i < n; i++) {
+		//	getline(cin, character);
+			//word.push(character);
+	//	}
+		
 
 		// vastaanottaa syötettä space tai enter painallukseen asti, strlen() estää looppia pyörimästä turhia kierroksia
 	cin >> character;
@@ -66,6 +66,86 @@ Uses:  The STL class stack and its methods
 		cout << endl << "input is a palidrome." << endl;
 	else
 		cout << "input is not a palindrome" << endl;
+
+	system("pause");
+}
+	*/
+
+
+/*tehtava 2*/
+
+int main()
+{
+	stack<char> s;
+	char x, y, z;
+
+	s.push('a');
+	cout << s.top() << endl;
+	s.push('b');
+	cout << s.top() << endl;
+	s.push('c');
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	s.pop();
+
+	/*
+	s.push('a');
+	cout << s.top() << endl;
+	s.push('b');
+	cout << s.top() << endl;
+	s.push('c');
+	cout << s.top() << endl;
+	x = s.top();
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	y = s.top();
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	s.push(x);
+	cout << s.top() << endl;
+	s.push(y);
+	cout << s.top() << endl;
+	s.pop();
+	*/
+
+	/*
+	s.push('a');
+	cout << s.top() << endl;
+	s.push('b');
+	cout << s.top() << endl;
+	s.push('c');
+	cout << s.top() << endl;
+	while (!s.empty())
+		s.pop();
+
+	s.push('a');
+	cout << s.top() << endl;
+	s.push('b');
+	cout << s.top() << endl;
+	while (!s.empty()) {
+		x = s.top();
+		s.pop();
+	}
+	*/
+
+	/*
+	s.push('c');
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	s.push('a');
+	cout << s.top() << endl;
+	s.pop();
+	cout << s.top() << endl;
+	s.push('b');
+	cout << s.top() << endl;
+	s.pop();
+	*/
 
 	system("pause");
 }
