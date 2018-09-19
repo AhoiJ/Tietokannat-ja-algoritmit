@@ -73,7 +73,7 @@ int main()
 
 
 /*tehtava 2*/
-
+/*
 int main()
 {
 	stack<char> s;
@@ -91,7 +91,7 @@ int main()
 	cout << s.top() << endl;
 	s.pop();
 
-	/*
+	
 	s.push('a');
 	cout << s.top() << endl;
 	s.push('b');
@@ -111,9 +111,9 @@ int main()
 	s.push(y);
 	cout << s.top() << endl;
 	s.pop();
-	*/
+	
 
-	/*
+	
 	s.push('a');
 	cout << s.top() << endl;
 	s.push('b');
@@ -131,9 +131,9 @@ int main()
 		x = s.top();
 		s.pop();
 	}
-	*/
+	
 
-	/*
+	
 	s.push('c');
 	cout << s.top() << endl;
 	s.pop();
@@ -145,7 +145,39 @@ int main()
 	s.push('b');
 	cout << s.top() << endl;
 	s.pop();
-	*/
+	
 
+	system("pause");
+}
+*/
+
+// Tehtava kolme on sama kuin tehtävä 1 c
+
+
+/*Tehtävä 4*/
+
+int main() 
+{
+	cout << "Enter numbers in increasing order " << endl;
+	bool check = false;
+	int number = 0;
+	stack<int> num;
+	do {
+		cin >> number;
+		if (!num.empty()) {
+			if (number <= num.top()) {
+				check = true;
+			}
+		}
+		if (check == false)
+		num.push(number);
+	
+	} while (check == false);
+	
+	while (!num.empty()) {
+		cout << num.top() << " ";
+		num.pop();
+	}
+	cout << endl;
 	system("pause");
 }
