@@ -155,7 +155,7 @@ int main()
 
 
 /*Tehtävä 4*/
-
+/*
 int main() 
 {
 	cout << "Enter numbers in increasing order " << endl;
@@ -180,4 +180,17 @@ int main()
 	}
 	cout << endl;
 	system("pause");
+}
+*/
+
+
+/*Tehtävä 5*/
+
+int main()
+{
+
+
+
+
+
 }
