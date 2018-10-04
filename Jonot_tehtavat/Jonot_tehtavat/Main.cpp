@@ -15,7 +15,77 @@ get_command, and do_command.
 */
 
 {
-	
+	Queue q;
+	Queue_entry en;
+	char x = 'x';
+	char y = 'y';
+	char test;
+/* TEHT 2 a)
+	q.append('a');
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	q.serve();
+	q.append('b');
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	q.serve();
+	q.append('c');
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	q.append('d');
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	q.serve();
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	*/
+
+	/*TEHT 2b)
+	q.append('a');
+	q.append('b');
+	q.retrieve(x);
+	std::cout << x << std::endl;
+	q.serve();
+	std::cout << x << std::endl;
+	q.append('c');
+	std::cout << x << std::endl;
+	q.append(x);
+	std::cout << x << std::endl;
+	q.serve();
+	std::cout << x << std::endl;
+	q.serve();
+	std::cout << x << std::endl;
+	*/
+	/*TEHT 2c)
+	q.append('a');
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	x = 'b';
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	q.append('x');
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	q.retrieve(y);
+	std::cout << y << std::endl;
+	q.serve();
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	q.append(x);
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	q.serve();
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	q.append(y);
+	q.retrieve(en);
+	std::cout << en << std::endl;
+	*/
+	system("pause");
+
+
+
+	/*
 	Queue test;
 	help();
 	int i = 1;
@@ -23,12 +93,6 @@ get_command, and do_command.
 	test.append(i);
 	
 	while (do_command(test.get_command(), test));
-	
-
-	/*
-	Extended_queue test_queue;
-	introduction();
-	while (do_command(get_command(), test_queue));
 	*/
 }
 
