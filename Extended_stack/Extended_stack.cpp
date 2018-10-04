@@ -131,6 +131,8 @@ void Extended_stack::print_contents()
 
 void Extended_stack::clear( ) // Reset the stack to be empty.
 {
+	while (!entry.empty)
+
 	count = 0;
 }
 
