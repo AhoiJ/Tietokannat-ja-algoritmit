@@ -5,7 +5,7 @@ typedef char Queue_entry;
 
 // using namespace std;
 
-const int maxqueue = 10; //  small value for testing
+const int maxqueue = 1000; //  small value for testing
 
 class Queue {
 public:

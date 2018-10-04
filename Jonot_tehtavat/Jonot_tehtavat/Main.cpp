@@ -15,75 +15,58 @@ get_command, and do_command.
 */
 
 {
-	Queue q;
-	Queue_entry en;
-	char x = 'x';
-	char y = 'y';
-	char test;
-/* TEHT 2 a)
-	q.append('a');
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	q.serve();
-	q.append('b');
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	q.serve();
-	q.append('c');
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	q.append('d');
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	q.serve();
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	*/
+	Queue stocks;
+	Queue stocksCal;
+	Queue prices;
+	Queue_entry s;
+	Queue_entry e;
+	int month = 100;
+	int losses = 0;
+	int gains = 0;
+	for (int i = 0; i < month; i++) {
+		stocks.append(1);
+		stocksCal.append(1);
+		prices.append(10);
+	}
 
-	/*TEHT 2b)
-	q.append('a');
-	q.append('b');
-	q.retrieve(x);
-	std::cout << x << std::endl;
-	q.serve();
-	std::cout << x << std::endl;
-	q.append('c');
-	std::cout << x << std::endl;
-	q.append(x);
-	std::cout << x << std::endl;
-	q.serve();
-	std::cout << x << std::endl;
-	q.serve();
-	std::cout << x << std::endl;
-	*/
-	/*TEHT 2c)
-	q.append('a');
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	x = 'b';
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	q.append('x');
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	q.retrieve(y);
-	std::cout << y << std::endl;
-	q.serve();
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	q.append(x);
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	q.serve();
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	q.append(y);
-	q.retrieve(en);
-	std::cout << en << std::endl;
-	*/
+	for (int i = 0; i < month; i++) {
+		stocks.append(1);
+		stocksCal.append(1);
+		prices.append(30);
+	}
+	for (int i = 0; i < month; i++) {
+		stocks.append(1);
+		stocksCal.append(1);
+		prices.append(20);
+	}
+	while (!stocksCal.empty()) {
+		stocksCal.retrieve(s); 
+		prices.retrieve(e);
+		losses += s*e;
+		stocksCal.serve();
+		prices.serve();
+	//	std::cout << losses << std::endl;
+	}
+	std::cout << " Cost of stocks: " << losses << std::endl;
+
+	for (int i = 0; i < month; i++) {
+		prices.append(50);
+	}
+	for (int i = 0; i < month; i++) {
+		prices.append(30);
+	}
+	while (!prices.empty()) {
+		stocks.retrieve(s);
+		prices.retrieve(e);
+		gains += s*e;
+		stocks.serve();
+		prices.serve();
+	}
+	std::cout << " Sale profits of stocks: " << gains << std::endl;
+
+	std::cout << " Overall Profits of stocksales: " << gains - losses << std::endl;
+
 	system("pause");
-
-
 
 	/*
 	Queue test;
@@ -159,3 +142,70 @@ Uses: The class Extended_queue.
 	return continue_input;
 }
 
+/*
+Queue q;
+Queue_entry en;
+char x = 'x';
+char y = 'y';
+char test;
+TEHT 2 a)
+q.append('a');
+q.retrieve(x);
+std::cout << x << std::endl;
+q.serve();
+q.append('b');
+q.retrieve(x);
+std::cout << x << std::endl;
+q.serve();
+q.append('c');
+q.retrieve(x);
+std::cout << x << std::endl;
+q.append('d');
+q.retrieve(x);
+std::cout << x << std::endl;
+q.serve();
+q.retrieve(x);
+std::cout << x << std::endl;
+*/
+
+/*TEHT 2b)
+q.append('a');
+q.append('b');
+q.retrieve(x);
+std::cout << x << std::endl;
+q.serve();
+std::cout << x << std::endl;
+q.append('c');
+std::cout << x << std::endl;
+q.append(x);
+std::cout << x << std::endl;
+q.serve();
+std::cout << x << std::endl;
+q.serve();
+std::cout << x << std::endl;
+*/
+/*TEHT 2c)
+q.append('a');
+q.retrieve(en);
+std::cout << en << std::endl;
+x = 'b';
+q.retrieve(en);
+std::cout << en << std::endl;
+q.append('x');
+q.retrieve(en);
+std::cout << en << std::endl;
+q.retrieve(y);
+std::cout << y << std::endl;
+q.serve();
+q.retrieve(en);
+std::cout << en << std::endl;
+q.append(x);
+q.retrieve(en);
+std::cout << en << std::endl;
+q.serve();
+q.retrieve(en);
+std::cout << en << std::endl;
+q.append(y);
+q.retrieve(en);
+std::cout << en << std::endl;
+*/
