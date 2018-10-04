@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Queue.h"
 #include "Utility.h"
+#include <stack>
 
 bool do_command(char c, Queue &test_queue);
 void help();
@@ -15,57 +16,128 @@ get_command, and do_command.
 */
 
 {
-	Queue stocks;
-	Queue stocksCal;
-	Queue prices;
-	Queue_entry s;
+	/*
+	int v;
 	Queue_entry e;
-	int month = 100;
-	int losses = 0;
-	int gains = 0;
-	for (int i = 0; i < month; i++) {
-		stocks.append(1);
-		stocksCal.append(1);
-		prices.append(10);
+	Queue a;
+	Queue c;
+	std::stack <int> b;
+	//  TEHTAVA 4 B  
+	for (int i = 0; i < 10; i++) {
+		a.append(i);
+	}
+	for (int i = 0; i < 10; i++) {
+		a.retrieve(e);
+		b.push(e);
+		a.serve();
+	}
+	
+//	while (!b.empty()) {
+	//	std::cout << b.top() << std::endl;
+//		b.pop();
+//	}
+	
+	// TEHTAVA 4 B
+	// TEHTAVA 4 A
+	for (int i = 0; i < 10; i++) {
+		c.append(b.top());
+		b.pop();
+	}
+	while (!c.empty()) {
+		c.retrieve(e);
+		std::cout << int(e) << std::endl;
+		c.serve();
+	}
+	// TEHTAVA 4 A
+	*/
+	/*
+	// TEHTAVA 4C
+	std::stack <int> a;
+	std::stack <int> b;
+
+	for (int i = 0; i < 10; i++) {
+		a.push(i);
+	}
+	while (!a.empty()) {
+		b.push(a.top());
+		a.pop();
 	}
 
-	for (int i = 0; i < month; i++) {
-		stocks.append(1);
-		stocksCal.append(1);
-		prices.append(30);
-	}
-	for (int i = 0; i < month; i++) {
-		stocks.append(1);
-		stocksCal.append(1);
-		prices.append(20);
-	}
-	while (!stocksCal.empty()) {
-		stocksCal.retrieve(s); 
-		prices.retrieve(e);
-		losses += s*e;
-		stocksCal.serve();
-		prices.serve();
-	//	std::cout << losses << std::endl;
-	}
-	std::cout << " Cost of stocks: " << losses << std::endl;
+		for (int i = 0; i < 10; i++) {
+			std::cout << b.top() << std::endl;
+			b.pop();
+		}
+		// TEHTAVA 4 C
+		*/
+	/*
+	//	Tehtava 4 D
+	std::stack <int> a;
+	std::stack <int> b;
 
-	for (int i = 0; i < month; i++) {
-		prices.append(50);
+	for (int i = 0; i < 10; i++) {
+		a.push(i);
 	}
-	for (int i = 0; i < month; i++) {
-		prices.append(30);
+	a.swap(b);
+	if (a.empty()) {
+		while (!b.empty()) {
+			std::cout << b.top() << std::endl;
+			b.pop();
+		}
 	}
-	while (!prices.empty()) {
-		stocks.retrieve(s);
-		prices.retrieve(e);
-		gains += s*e;
-		stocks.serve();
-		prices.serve();
-	}
-	std::cout << " Sale profits of stocks: " << gains << std::endl;
+	*/
+	//	TEHTAVA 4 D
+	/*
+	// TEHTAVA 4 E
+	Queue a;
+	std::stack <int> b;
+	Queue_entry e;
 
-	std::cout << " Overall Profits of stocksales: " << gains - losses << std::endl;
+	for (int i = 0; i < 10; i++) {
+		a.append(i);
+	}
+	for (int i = 0; i < 10; i++) {
+		a.retrieve(e);
+		b.push(int(e));
+		a.serve();
+	}
+	while (!b.empty()) {
+		//std::cout << b.top() << std::endl;
+		a.append(b.top());
+		b.pop();
+	}
+	while (!a.empty()) {
+		a.retrieve(e);
+		std::cout << int(e) << std::endl;
+		a.serve();
+	}
+	//	TEHTAVA 4 E
+	*/
 
+	//	TEHTAVA 4 F
+	Queue a;
+	std::stack <int> b;
+	Queue_entry e;
+	int c;
+
+	for (int i = 0; i < 10; i++) {
+		b.push(i);
+	}
+	while (!b.empty()) {
+		c = b.top();
+		a.append(c);
+		b.pop();
+	}
+	while (!a.empty()) {
+		a.retrieve(e);
+		b.push(int(e));
+		a.serve();
+	}
+	while (!b.empty()) {
+		std::cout << b.top() << std::endl;
+		b.pop();
+	}
+	//	TEHTAVA 4 F
+	
 	system("pause");
 
 	/*
@@ -208,4 +280,57 @@ std::cout << en << std::endl;
 q.append(y);
 q.retrieve(en);
 std::cout << en << std::endl;
+*/
+
+/*		TEHTAVA 3
+Queue stocks;
+Queue stocksCal;
+Queue prices;
+Queue_entry s;
+Queue_entry e;
+int month = 100;
+int losses = 0;
+int gains = 0;
+for (int i = 0; i < month; i++) {
+stocks.append(1);
+stocksCal.append(1);
+prices.append(10);
+}
+
+for (int i = 0; i < month; i++) {
+stocks.append(1);
+stocksCal.append(1);
+prices.append(30);
+}
+for (int i = 0; i < month; i++) {
+stocks.append(1);
+stocksCal.append(1);
+prices.append(20);
+}
+while (!stocksCal.empty()) {
+stocksCal.retrieve(s);
+prices.retrieve(e);
+losses += s*e;
+stocksCal.serve();
+prices.serve();
+//	std::cout << losses << std::endl;
+}
+std::cout << " Cost of stocks: " << losses << std::endl;
+
+for (int i = 0; i < month; i++) {
+prices.append(50);
+}
+for (int i = 0; i < month; i++) {
+prices.append(30);
+}
+while (!prices.empty()) {
+stocks.retrieve(s);
+prices.retrieve(e);
+gains += s*e;
+stocks.serve();
+prices.serve();
+}
+std::cout << " Sale profits of stocks: " << gains << std::endl;
+
+std::cout << " Overall Profits of stocksales: " << gains - losses << std::endl;
 */
