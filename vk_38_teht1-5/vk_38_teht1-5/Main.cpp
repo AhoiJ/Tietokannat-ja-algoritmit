@@ -3,7 +3,7 @@
 #include <string>
 
 using namespace std;
-/* Tehtava 1 -----------------------------------
+// Tehtava 1 -----------------------------------
 int main()
 
 //Pre:   The user supplies an integer n and n decimal numbers.
@@ -69,7 +69,7 @@ int main()
 
 	system("pause");
 }
-	*/
+
 
 
 /*tehtava 2*/
@@ -186,11 +186,3 @@ int main()
 
 /*Tehtävä 5*/
 
-int main()
-{
-
-
-
-
-
-}
