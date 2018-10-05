@@ -10,7 +10,7 @@ public:
 
 	char get_command();
 	bool do_command( char command, std::stack <double> &numbers);
-	void addition(double p);
+	void addition(double p, std::stack <double> &numbers);
 
 protected:
 	char command;
