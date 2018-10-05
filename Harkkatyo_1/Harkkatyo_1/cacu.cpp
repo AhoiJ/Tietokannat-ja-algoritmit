@@ -68,8 +68,7 @@ bool cacu::do_command(char command, stack <double> &numbers)
 		 break;
 
 	 case'x':
-
-		 if (numbers.size() == 2)
+		 if (numbers.size() > 1)
 		 {
 			 q = numbers.top();
 			 numbers.pop();
@@ -83,8 +82,16 @@ bool cacu::do_command(char command, stack <double> &numbers)
 		 break;
 
 	 case's':
+		 p = 0;
 
-
+		 while (!numbers.empty()) {
+			 q = numbers.top();
+			 numbers.pop();
+			 p += q;
+		 }
+		 numbers.push(p);
+		 cout << "Sum of all numbers: " << p << endl;
+		 break;
 	 case 'q':
 			  cout << "Calculation finished.\n"; 
 			  return false;
