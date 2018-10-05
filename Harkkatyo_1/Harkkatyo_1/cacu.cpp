@@ -22,7 +22,8 @@ char cacu::get_command()
 		command = tolower(command);
 		if (command == '?' || command == '=' || command == '+' ||
 			command == '-' || command == '*' || command == '/' ||
-			command == 'x' || command == 's' || command == 'q') waiting = false;
+			command == 'x' || command == 's' || command == 'a' ||
+			command == 'q') waiting = false;
 
 		else {
 			cout << "Please enter a valid command:" << endl
@@ -30,6 +31,7 @@ char cacu::get_command()
 				<< "[+] [−] [*] [/] are arithmetic operations" << endl
 				<< "[X] is exchange stack order" << endl
 				<< "[S] is sum of all numbers in stack" << endl
+				<< "[A] is average of all numbers in stack" << endl
 				<< "[Q]uit." << endl;
 		}
 	}
@@ -47,6 +49,7 @@ bool cacu::do_command(char command, stack <double> &numbers)
 	Uses: The class Stack. */
 
 	 double p, q;
+	 int counter = 0;
 	 switch (command) {
 	 case'?':
 		 cout << "Enter a real number: " << flush; cin >> p;
@@ -92,6 +95,22 @@ bool cacu::do_command(char command, stack <double> &numbers)
 		 numbers.push(p);
 		 cout << "Sum of all numbers: " << p << endl;
 		 break;
+
+	 case 'a':
+
+		 p = 0;
+		
+		 while (!numbers.empty()) {
+			 q = numbers.top();
+			 numbers.pop();
+			 p += q;
+			 counter++;
+		 }
+		 p = p / counter;
+		 numbers.push(p);
+		 cout << "Sum of all numbers: " << p << endl;
+		 break;
+
 	 case 'q':
 			  cout << "Calculation finished.\n"; 
 			  return false;
