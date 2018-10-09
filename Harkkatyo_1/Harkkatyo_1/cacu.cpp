@@ -49,7 +49,7 @@ bool cacu::do_command(char command, stack <double> &numbers)
 	Uses: The class Stack. */
 
 	 double p, q;
-	 int counter = 0;
+	 double counter = 0;
 	 switch (command) {
 	 case'?':
 		 cout << "Enter a real number: " << flush; cin >> p;
@@ -71,6 +71,7 @@ bool cacu::do_command(char command, stack <double> &numbers)
 		 break;
 
 	 case'x':
+
 		 if (numbers.size() > 1)
 		 {
 			 q = numbers.top();
@@ -108,7 +109,7 @@ bool cacu::do_command(char command, stack <double> &numbers)
 		 }
 		 p = p / counter;
 		 numbers.push(p);
-		 cout << "Sum of all numbers: " << p << endl;
+		 cout << "Average of all numbers: " << p << endl;
 		 break;
 
 	 case 'q':
