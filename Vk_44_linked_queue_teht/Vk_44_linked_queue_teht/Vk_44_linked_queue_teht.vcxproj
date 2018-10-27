@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{37726758-467E-4A05-AFD8-69CE3EB92731}</ProjectGuid>
-    <RootNamespace>vk_43_tehtavia</RootNamespace>
+    <ProjectGuid>{48212570-8432-4D69-81FB-A5207BE2DDD2}</ProjectGuid>
+    <RootNamespace>Vk_44_linked_queue_teht</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -110,6 +110,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Extended_queue.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Queue.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Extended_queue.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Queue.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
