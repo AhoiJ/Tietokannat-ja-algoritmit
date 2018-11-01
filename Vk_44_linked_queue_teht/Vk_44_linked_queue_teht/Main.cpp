@@ -1,5 +1,8 @@
+#include "Node.h"
+#include "Extended_queue.h"
+#include "Queue.h"
+#include "Utility.h"
 #include <iostream>
-
 using namespace std;
 
 void main() {
@@ -14,7 +17,8 @@ void main() {
 		cout << dynamic_array[u] + 1 << endl;
 	*/
 
-
+	Queue uusQue;
+	Queue tokaque(uusQue);
 
 	system("pause");
 
