@@ -1,16 +1,23 @@
+/*
+
 #include "List.h"
 #include <iostream>
 
 using namespace std;
 
-template <class List_entry>
-List<List_entry>::List() {
-	entry[max_list];
+template <class T>
+List<T>::List() {
+	// entry[max_list];
 	count = 0;
 }
 
-template <class List_entry>
-bool List<List_entry>::full() const
+template<class T>
+List<T>::~List()
+{
+}
+
+template <class T>
+bool List<T>::full() const
 // returns true if list not full, false if list full
 {
 	bool result = false;
@@ -19,8 +26,8 @@ bool List<List_entry>::full() const
 	return result;
 }
 
-template <class List_entry>
-bool List<List_entry>::empty() const
+template <class T>
+bool List<T>::empty() const
 // returns true if list is empty, false if not empty
 {
 	bool result = false;
@@ -29,8 +36,8 @@ bool List<List_entry>::empty() const
 	return result;
 }
 
-template <class List_entry>
-void List<List_entry>::clear()
+template <class T>
+void List<T>::clear()
 // removes all elemets from list
 {
 	while (!empty()) {
@@ -39,28 +46,25 @@ void List<List_entry>::clear()
 	}
 }
 
-template <class List_entry>
-int List<List_entry>::size() const
-/* Post: The function returns the number of entries in the List. */
+template <class T>
+int List<T>::size() const
+//Post: The function returns the number of entries in the List. 
 {
 	return count;
 }
 
 
 
-template <class List_entry>
-void List<List_entry>::traverse(void(*visit)(List_entry &))
-/*
-Post: The action specified by function (*visit) has been performed on every
-entry of the List, beginning at position 0 and doing each in turn.
-*/
+template <class T>
+void List<T>::traverse(void(*visit)(T &))
+
 {
 	for (int i = 0; i < count; i++)
 		(*visit)(entry[i]);
 }
 
-template<class List_entry>
-Error_code List<List_entry>::retrieve(int position, List_entry & x) const
+template<class T>
+Error_code List<T>::retrieve(int position, T & x) const
 {
 	if (position <= count || position >= count)
 	{
@@ -70,8 +74,8 @@ Error_code List<List_entry>::retrieve(int position, List_entry & x) const
 	return range_error;
 }
 
-template<class List_entry>
-Error_code List<List_entry>::replace(int position, const List_entry & x)
+template<class T>
+Error_code List<T>::replace(int position, const T & x)
 {
 	if (position <= count || position >= count)
 	{
@@ -82,8 +86,8 @@ Error_code List<List_entry>::replace(int position, const List_entry & x)
 		return range_error;
 }
 
-template<class List_entry>
-Error_code List<List_entry>::remove(int position, List_entry & x)
+template<class T>
+Error_code List<T>::remove(int position, T & x)
 {
 	if (position <= count || position >= count)
 	{
@@ -99,15 +103,9 @@ Error_code List<List_entry>::remove(int position, List_entry & x)
 
 
 
-template <class List_entry>
-Error_code List<List_entry>::insert(int position, const List_entry &x)
-/*
-Post: If the List is not full and 0 <= position <= n,
-where n is the number of entries in the List, the function succeeds:
-Any entry formerly at position and all later entries have their
-position numbers increased by 1 and x is inserted at position of the List.
-Else: The function fails with a diagnostic error code.
-*/
+template <class T>
+Error_code List<T>::insert(int position, const T &x)
+
 {
 	if (full())
 		return overflow;
@@ -122,6 +120,6 @@ Else: The function fails with a diagnostic error code.
 	count++;
 	return success;
 }
-
+*/
 
 
