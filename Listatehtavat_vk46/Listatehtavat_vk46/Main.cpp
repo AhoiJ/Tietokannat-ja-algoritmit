@@ -127,18 +127,17 @@ Error_code List<T>::replace(int position, const T & x)
 template<typename T>
 Error_code List<T>::remove(int position, T & x)
 {
-	if (position <= count || position >= count)
+	if (position < 0 || position > count)
 	{
-		x = entry[position];
-		entry[position] = NULL;
+		return fail;
+	}else
+		x = this->entry[position];
 		for (int i = count - 1; i >= position; i--) {
-			entry[i - 1] = entry[i];
+			this->entry[i] = this->entry[i - 1];
 		}
 		count--;
 		return success;
-	}
-	else
-		return fail;
+	
 }
 
 
@@ -173,12 +172,15 @@ Else: The function fails with a diagnostic error code.
 
 
 Error_code insert_first(const int &x, List<int> &a_list);
-Error_code remove_first(const int &x, List<int> &a_list);
+Error_code remove_first(int &x, List<int> &a_list);
 Error_code insert_last(const int &x, List<int> &a_list);
-Error_code remove_last(const int &x, List<int> &a_list);
+Error_code remove_last(int &x, List<int> &a_list);
 Error_code median_list(int &x, List<int> &a_list);
 Error_code interchange(int pos1, int pos2, List<int> &a_list); 
-void reverse_traverse(List<int> &a_list, void(*visit)(int &));
+void reverse_traverse(List<int> &a_list, void(*visit)(int &));// skipped
+Error_code copy(List<int> &dest, List<int> &source);
+Error_code join(List<int> &dest, List<int> &source);
+void reverse(List<int> &a_list);
 
 
 int main () {
@@ -202,13 +204,46 @@ int main () {
 	// end of teth 1.2 /start of teht 1.3
 	insert_last(13, lista);
 	// end of teht 1.3 /start of teht 1.4
-	remove_last(k, lista);
+//	remove_last(k, lista);
 	// end of teht 1.4 / start of teht 1.5   testitarkoituksissa kommentoi remove_last pois tai laita lis‰‰ kamaa ennen loppuja
 	median_list(k, lista);
 	// end of teht 1.5 / start of teht 1.6
 	interchange(0, 1, lista);
 	// end of teht 1.6 /start of teht 1.7
-	reverse_traverse(List<int> &a_list, void(*visit)(List_entry &)); // wtf
+//	reverse_traverse(lista,Error_code (*retr)( &k)); // skip
+	// skipped teht 1.7 /start of 1.8
+	j--;
+	lista.insert(0, 11);// testej‰ varten latetaan lis‰‰ kamaa listaan
+	j--;
+	lista.insert(0, 22);
+	j--;
+	lista.insert(0, 33);
+	List <int> listaCopy;
+	copy(listaCopy, lista);
+	// end of teht 1.8 / start of teht 1.9
+	join(listaCopy, lista);
+	/* // Join-testej‰
+	cout << " lista: ";
+	int w = 0;
+	int i = 0;
+	while (!lista.empty())
+	{
+		lista.remove(lista.size()-1, w);
+		cout << w << endl;
+	}
+	int e = 0;
+	int y = 0;
+	cout << " ListaCopy: ";
+	while (!listaCopy.empty())
+	{
+		listaCopy.remove(listaCopy.size()-1, e);
+		cout << e << endl;
+	}
+	*/
+	// end of teht 1.9 / start of teht 1.10
+	reverse(lista);
+
+
 
 	system("pause");
 	return 0;
@@ -231,7 +266,7 @@ Error_code insert_last(const int &x, List<int> &a_list) {
 	return success;
 }
 Error_code remove_last(int &x, List<int> &a_list) {
-
+	
 	a_list.remove(a_list.size(), x);
 	return success;
 }
@@ -254,3 +289,58 @@ void reverse_traverse(List<int> &a_list, void(*visit)(int &)) {
 
 
 }
+Error_code copy(List<int> &dest, List<int> &source) {
+	
+	int x;
+	dest.clear();
+	for (int i = 0; i < source.size(); i++) {
+		source.retrieve(i, x);
+		dest.insert(i, x);
+	}
+
+	return success;
+}
+Error_code join(List<int> &dest, List<int> &source) {
+	
+	int x;
+	for (int i = source.size() -1; i >= 0; i--) {
+		source.retrieve(i, x);
+		dest.insert(0, x);
+	}
+	return success;
+}
+void reverse(List<int> &a_list) {
+	List<int> temp;
+	int x = 0;
+	int count = a_list.size() - 1;
+	for (int i = count; i >= 0; i--) {
+		a_list.retrieve(i, x);
+		temp.insert(0, x);
+		a_list.remove(i, x);
+	}
+	/*
+	cout << "temp: " << endl;
+	int t = 0;
+	while (!temp.empty())
+	{
+		temp.remove(temp.size() -1, t);
+		cout << t << endl;
+	}*/
+	
+	count = temp.size() - 1;
+	for (int i = count; i >= 0; i--) {
+		temp.retrieve(i, x);
+		insert_last(x, a_list);
+		temp.remove(i, x);
+	}
+	/*
+	cout << "list reverse: " << endl;
+	int e = 0;
+	while (!a_list.empty())
+	{
+		a_list.remove(a_list.size() -1, e);
+		cout << e << endl;
+	}*/
+	
+}
+
