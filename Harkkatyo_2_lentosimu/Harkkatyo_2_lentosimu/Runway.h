@@ -4,7 +4,7 @@
 #include "Queue.h"
 #include "Extended_queue.h"
 
-enum Runway_activity { idle, land, takeoff };
+enum Runway_activity { idle, land, takingoff };
 class Runway {
 public:
 	Runway(int limit);

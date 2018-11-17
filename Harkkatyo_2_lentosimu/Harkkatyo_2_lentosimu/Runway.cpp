@@ -1,5 +1,6 @@
 #include "Runway.h"
-
+#include "Extended_queue.h"
+#include "Queue.h"
 
 
 Runway::Runway(int limit)
@@ -91,7 +92,7 @@ Uses:  class Extended_queue.
 		takeoff.retrieve(moving);
 		takeoff_wait += time - moving.started();
 		num_takeoffs++;
-		in_progress = takeoff;
+		in_progress = takingoff;
 		takeoff.serve();
 	}
 

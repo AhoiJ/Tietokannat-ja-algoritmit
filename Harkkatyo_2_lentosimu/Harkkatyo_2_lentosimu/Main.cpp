@@ -53,7 +53,7 @@ int main()     //  Airport simulation program
 		case land:
 			moving_plane.land(current_time);
 			break;
-		case takeoff:
+		case takingoff:
 			moving_plane.fly(current_time);
 			break;
 		case idle:

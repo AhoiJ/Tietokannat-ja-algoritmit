@@ -1,13 +1,11 @@
+/*
 #include "Plane.h"
 #include <iostream>
 
 using namespace std;
 
 Plane::Plane()
-/*
-Post:  The Plane data members flt_num, clock_start,
-state are set to illegal default values.
-*/
+
 {
 	flt_num = -1;
 	clock_start = -1;
@@ -15,11 +13,7 @@ state are set to illegal default values.
 }
 
 Plane::Plane(int flt, int time, Plane_status status)
-/*
-Post:  The Plane data members flt_num, clock_start,
-and state are set to the values of the parameters flt,
-time and status, respectively.
-*/
+
 
 {
 	flt_num = flt;
@@ -33,10 +27,7 @@ time and status, respectively.
 }
 
 void Plane::refuse() const
-/*
-Post: Processes a Plane wanting to use Runway, when
-the Queue is full.
-*/
+
 
 {
 	cout << "Plane number " << flt_num;
@@ -47,9 +38,7 @@ the Queue is full.
 }
 
 void Plane::land(int time) const
-/*
-Post: Processes a Plane that is landing at the specified time.
-*/
+
 
 {
 	int wait = time - clock_start;
@@ -60,9 +49,7 @@ Post: Processes a Plane that is landing at the specified time.
 
 
 void Plane::fly(int time) const
-/*
-Post: Process a Plane that is taking off at the specified time.
-*/
+
 
 {
 	int wait = time - clock_start;
@@ -73,9 +60,8 @@ Post: Process a Plane that is taking off at the specified time.
 
 
 int Plane::started() const
-/*
-Post: Return the time that the Plane entered the airport system.
-*/
+
 {
 	return clock_start;
 }
+*/

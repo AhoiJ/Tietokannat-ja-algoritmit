@@ -1,4 +1,7 @@
+/*
 #pragma once
+#include "Queue.h"
+#include "Extended_queue.h"
 
 enum Plane_status { null, arriving, departing };
 class Plane {
@@ -15,3 +18,4 @@ private:
 	int clock_start;
 	Plane_status state;
 };
+*/
