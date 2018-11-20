@@ -16,6 +16,7 @@ prior Runway use and to record the limit on queue sizes.
 	num_land_refused = num_takeoff_refused = 0;
 	num_land_accepted = num_takeoff_accepted = 0;
 	land_wait = takeoff_wait = idle_time = 0;
+	num_of_takeoffToLandings = 0;
 }
 
 
@@ -67,7 +68,7 @@ Uses:  class Extended_queue.
 	return result;
 }
 
-Runway_activity Runway_takeoff::activity(int time, Plane &moving)
+Runway_activity2 Runway_takeoff::activity(int time, Plane &moving)
 /*
 Post:  If the landing Queue has entries, its front
 Plane is copied to the parameter moving
@@ -80,12 +81,12 @@ Uses:  class Extended_queue.
 */
 
 {
-	Runway_activity in_progress;
+	Runway_activity2 in_progress;
 	if (!landing.empty()) {
 		landing.retrieve(moving);
 		land_wait += time - moving.started();
 		num_landings++;
-		in_progress = land;
+		in_progress = land2;
 		landing.serve();
 	}
 
@@ -93,13 +94,13 @@ Uses:  class Extended_queue.
 		takeoff.retrieve(moving);
 		takeoff_wait += time - moving.started();
 		num_takeoffs++;
-		in_progress = takingoff;
+		in_progress = takingoff2;
 		takeoff.serve();
 	}
 
 	else {
 		idle_time++;
-		in_progress = idle;
+		in_progress = idle2;
 	}
 	return in_progress;
 }
@@ -114,22 +115,53 @@ Post: Runway usage statistics are summarized and printed.
 		<< "Takeoff Runway : " << endl
 		<< "Total number of planes processed "
 		<< (num_land_requests + num_takeoff_requests) << endl
+		<< "Total number of planes asking to land "
+		<< num_land_requests << endl
 		<< "Total number of planes asking to take off "
 		<< num_takeoff_requests << endl
+		<< "Total number of planes accepted for landing "
+		<< num_land_accepted << endl
 		<< "Total number of planes accepted for takeoff "
 		<< num_takeoff_accepted << endl
+		<< "Total number of planes refused for landing "
+		<< num_land_refused << endl
 		<< "Total number of planes refused for takeoff "
 		<< num_takeoff_refused << endl
+		<< "Total number of planes took of from landing runway "
+		<< num_of_takeoffToLandings << endl
+		<< "Total number of planes that landed "
+		<< num_landings << endl
 		<< "Total number of planes that took off "
 		<< num_takeoffs << endl
+		<< "Total number of planes left in landing queue "
+		<< landing.size() << endl
 		<< "Total number of planes left in takeoff queue "
 		<< takeoff.size() << endl;
 	cout << "Percentage of time runway idle "
 		<< 100.0 * ((float)idle_time) / ((float)time) << "%" << endl;
+	cout << "Average wait in landing queue "
+		<< ((float)land_wait) / ((float)num_landings) << " time units";
 	cout << endl << "Average wait in takeoff queue "
 		<< ((float)takeoff_wait) / ((float)num_takeoffs)
 		<< " time units" << endl;
+	cout << "Average observed rate of planes wanting to land "
+		<< ((float)num_land_requests) / ((float)time)
+		<< " per time unit" << endl;
 	cout << "Average observed rate of planes wanting to take off "
 		<< ((float)num_takeoff_requests) / ((float)time)
 		<< " per time unit" << endl;
+}
+
+Error_code Runway_takeoff::takeoffQueueStatus()
+{
+	if (!takeoff.empty()) {
+		return fail;
+	}
+	else
+	return success;
+}
+
+void Runway_takeoff::addToSwitchCount()
+{
+	num_of_takeoffToLandings++;
 }

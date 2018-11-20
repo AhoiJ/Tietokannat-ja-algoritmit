@@ -16,6 +16,7 @@ prior Runway use and to record the limit on queue sizes.
 	num_land_refused = num_takeoff_refused = 0;
 	num_land_accepted = num_takeoff_accepted = 0;
 	land_wait = takeoff_wait = idle_time = 0;
+	num_landings_toTakeoff = 0;
 }
 
 
@@ -77,7 +78,6 @@ and a result  takeoff is returned. Otherwise,
 idle is returned. Runway statistics are updated.
 Uses:  class Extended_queue.
 */
-
 {
 	Runway_activity in_progress;
 	if (!landing.empty()) {
@@ -128,6 +128,8 @@ Post: Runway usage statistics are summarized and printed.
 		<< num_landings << endl
 		<< "Total number of planes that took off "
 		<< num_takeoffs << endl
+		<< "Total number of planes that landed in takeoff runway "
+		<< num_landings_toTakeoff << endl
 		<< "Total number of planes left in landing queue "
 		<< landing.size() << endl
 		<< "Total number of planes left in takeoff queue "
@@ -145,4 +147,28 @@ Post: Runway usage statistics are summarized and printed.
 	cout << "Average observed rate of planes wanting to take off "
 		<< ((float)num_takeoff_requests) / ((float)time)
 		<< " per time unit" << endl;
+}
+
+Error_code Runway::landingQueueStatus()
+{
+	if (!landing.empty()) {
+		return fail;
+	}
+	else
+		return success;
+}
+
+Error_code Runway::landingQueueFull()
+{
+	Error_code result;
+	if (landing.size() == queue_limit)
+		result = success;
+	else
+		result = fail;
+	return result;
+}
+
+void Runway::addToSwitchCount()
+{
+	num_landings_toTakeoff++;
 }

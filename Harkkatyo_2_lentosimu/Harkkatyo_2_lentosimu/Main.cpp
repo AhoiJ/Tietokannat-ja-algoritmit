@@ -1,4 +1,5 @@
 #include "Runway.h"
+#include "Runway_takeoff.h"
 #include "Utility.h"
 #include "RANDOM.h"
 #include "Extended_queue.h"
@@ -10,8 +11,11 @@ using namespace std;
 void initialize(int &end_time, int &queue_limit,
 	double &arrival_rate, double &departure_rate);
 void run_idle(int time);
+void run_idle_landing(int time);
+void run_idle_takeoff(int time);
 void main_1();
 void main_2();
+void main_3();
 
 int main() {
 	int loops = 0;
@@ -19,7 +23,8 @@ int main() {
 		int choise;
 		cout << " This program has multiple versions." << endl
 			<< "Choose 1 if you wish to use the default version." << endl
-			<< "Choose 2 if you wish to use the 2 runway version." << endl;
+			<< "Choose 2 if you wish to use the 2 runway version." << endl
+			<< "Choose 3 if you wish to use the 2 runway with extra usefullness." << endl;
 		cin >> choise;
 		if (choise == 1)
 		{
@@ -35,7 +40,14 @@ int main() {
 			main_2();
 			loops = 1;
 		}
-		else if (int(choise) != 1 || int(choise) != 2) {
+		else if (choise == 3) {
+			cout << endl << "This program simulates an airport with two runways." << endl
+				<< "One plane can land or depart in each unit of time to different runways." << endl
+				<< "or if runways are free, they can reroute to eachoter" << endl;
+			main_3();
+			loops = 1;
+		}
+		else if (choise != 1 || choise != 2 || choise == 3) {
 			cout << "Enter valid choise." << endl;
 			loops = 0;
 		}
@@ -141,6 +153,22 @@ Post: The specified time is printed with a message that the runway is idle.
 	cout << time << ": Runway is idle." << endl;
 }
 
+void run_idle_takeoff(int time)
+/*
+Post: The specified time is printed with a message that the runway is idle.
+*/
+{
+	cout << time << ": Takeoff runway is idle." << endl;
+}
+
+void run_idle_landing(int time)
+/*
+Post: The specified time is printed with a message that the runway is idle.
+*/
+{
+	cout << time << ": Landing runway is idle." << endl;
+}
+
 void main_2() {
 
 	int end_time;            //  time to run simulation
@@ -173,9 +201,9 @@ void main_2() {
 		case land:
 			landing_plane.land(current_time);
 			break;
-// poistettu taking off case.
+			// poistettu taking off case.
 		case idle:
-			run_idle(current_time);
+			run_idle_landing(current_time);
 		}
 
 		switch (takeoff_airport.activity(current_time, takeoff_plane)) {
@@ -185,7 +213,71 @@ void main_2() {
 			break;
 			// poistettu landing case.
 		case idle:
-			run_idle(current_time);
+			run_idle_takeoff(current_time);
+		}
+
+	}
+	landing_airport.shut_down(end_time);
+	takeoff_airport.shut_down(end_time);
+}
+
+void main_3() {
+
+	int end_time;            //  time to run simulation
+	int queue_limit;         //  size of Runway queues
+	int flight_number = 0;
+	double arrival_rate, departure_rate;
+	initialize(end_time, queue_limit, arrival_rate, departure_rate);
+	Random variable;
+	Runway_takeoff takeoff_airport(queue_limit);
+	Runway landing_airport(queue_limit);
+	for (int current_time = 0; current_time < end_time; current_time++) { //  loop over time intervals
+		int number_arrivals = variable.poisson(arrival_rate);  //  current arrival requests
+		for (int i = 0; i < number_arrivals; i++) {
+			Plane current_plane(flight_number++, current_time, arriving);
+			if (landing_airport.landingQueueFull() == success) {
+				takeoff_airport.can_land(current_plane);
+				landing_airport.addToSwitchCount();
+			}
+			else if (landing_airport.can_land(current_plane) != success)
+					current_plane.refuse();
+		}
+
+		int number_departures = variable.poisson(departure_rate); //  current departure requests
+		for (int j = 0; j < number_departures; j++) {
+			Plane current_plane(flight_number++, current_time, departing);
+			if (takeoff_airport.takeoffQueueStatus() == fail && landing_airport.landingQueueStatus() == success) {
+				landing_airport.can_depart(current_plane);
+				takeoff_airport.addToSwitchCount();
+			}
+			else if (takeoff_airport.can_depart(current_plane) != success)
+				current_plane.refuse();
+		}
+
+		Plane landing_plane;
+		Plane takeoff_plane;
+		switch (landing_airport.activity(current_time, landing_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			landing_plane.land(current_time);
+			break;
+		case takingoff:
+			landing_plane.fly(current_time);
+			break;
+		case idle:
+			run_idle_landing(current_time);
+		}
+
+		switch (takeoff_airport.activity(current_time, takeoff_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			takeoff_plane.land(current_time);
+			break;
+		case takingoff:
+			takeoff_plane.fly(current_time);
+			break;
+		case idle:
+			run_idle_takeoff(current_time);
 		}
 
 	}

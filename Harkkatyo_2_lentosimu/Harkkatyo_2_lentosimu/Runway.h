@@ -11,6 +11,9 @@ public:
 	Error_code can_depart(const Plane & current);
 	Runway_activity activity(int time, Plane & moving);
 	void shut_down(int time) const;
+	Error_code landingQueueStatus();
+	Error_code landingQueueFull();
+	void addToSwitchCount ();
 
 private:
 	Extended_queue landing;
@@ -27,4 +30,5 @@ private:
 	int land_wait;                //  total time of planes waiting to land
 	int takeoff_wait;             //  total time of planes waiting to take off
 	int idle_time;                //  total time runway is idle
+	int num_landings_toTakeoff;
 };
