@@ -30,6 +30,9 @@
     <ClCompile Include="RANDOM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Runway_takeoff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runway.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RANDOM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Runway_takeoff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

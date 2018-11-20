@@ -4,9 +4,9 @@
 #include "Extended_queue.h"
 
 enum Runway_activity { idle, land, takingoff };
-class Runway {
+class Runway_takeoff {
 public:
-	Runway(int limit);
+	Runway_takeoff(int limit);
 	Error_code can_land(const Plane & current);
 	Error_code can_depart(const Plane & current);
 	Runway_activity activity(int time, Plane & moving);

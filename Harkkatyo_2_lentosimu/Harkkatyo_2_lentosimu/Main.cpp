@@ -1,4 +1,3 @@
-#include "Plane.h"
 #include "Runway.h"
 #include "Utility.h"
 #include "RANDOM.h"
@@ -10,9 +9,42 @@ using namespace std;
 
 void initialize(int &end_time, int &queue_limit,
 	double &arrival_rate, double &departure_rate);
-void run_idle(int);
+void run_idle(int time);
+void main_1();
+void main_2();
 
-int main()     //  Airport simulation program
+int main() {
+	int loops = 0;
+	while (loops == 0) {
+		int choise;
+		cout << " This program has multiple versions." << endl
+			<< "Choose 1 if you wish to use the default version." << endl
+			<< "Choose 2 if you wish to use the 2 runway version." << endl;
+		cin >> choise;
+		if (choise == 1)
+		{
+			cout << "This program simulates an airport with only one runway." << endl
+				<< "One plane can land or depart in each unit of time." << endl;
+			main_1();
+			loops = 1;
+
+		}
+		else if (choise == 2) {
+			cout << "This program simulates an airport with two runways." << endl
+				<< "One plane can land or depart in each unit of time to different runways." << endl;
+			main_2();
+			loops = 1;
+		}
+		else if (int(choise) != 1 || int(choise) != 2) {
+			cout << "Enter valid choise." << endl;
+			loops = 0;
+		}
+	}
+	system("pause");
+	return 0;
+}
+
+void main_1()     //  Airport simulation program
 			   /*
 			   Pre:  The user must supply the number of time intervals the simulation is to
 			   run, the expected number of planes arriving, the expected number
@@ -76,8 +108,7 @@ void initialize(int &end_time, int &queue_limit,
 	*/
 
 {
-	cout << "This program simulates an airport with only one runway." << endl
-		<< "One plane can land or depart in each unit of time." << endl;
+
 	cout << "Up to what number of planes can be waiting to land "
 		<< "or take off at any time? " << flush;
 	cin >> queue_limit;
@@ -108,4 +139,56 @@ Post: The specified time is printed with a message that the runway is idle.
 */
 {
 	cout << time << ": Runway is idle." << endl;
+}
+
+void main_2() {
+
+	int end_time;            //  time to run simulation
+	int queue_limit;         //  size of Runway queues
+	int flight_number = 0;
+	double arrival_rate, departure_rate;
+	initialize(end_time, queue_limit, arrival_rate, departure_rate);
+	Random variable;
+	Runway takeoff_airport(queue_limit);
+	Runway landing_airport(queue_limit);
+	for (int current_time = 0; current_time < end_time; current_time++) { //  loop over time intervals
+		int number_arrivals = variable.poisson(arrival_rate);  //  current arrival requests
+		for (int i = 0; i < number_arrivals; i++) {
+			Plane current_plane(flight_number++, current_time, arriving);
+			if (landing_airport.can_land(current_plane) != success)
+				current_plane.refuse();
+		}
+
+		int number_departures = variable.poisson(departure_rate); //  current departure requests
+		for (int j = 0; j < number_departures; j++) {
+			Plane current_plane(flight_number++, current_time, departing);
+			if (takeoff_airport.can_depart(current_plane) != success)
+				current_plane.refuse();
+		}
+
+		Plane landing_plane;
+		Plane takeoff_plane;
+		switch (landing_airport.activity(current_time, landing_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			landing_plane.land(current_time);
+			break;
+// poistettu taking off case.
+		case idle:
+			run_idle(current_time);
+		}
+
+		switch (takeoff_airport.activity(current_time, takeoff_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case takingoff:
+			takeoff_plane.fly(current_time);
+			break;
+			// poistettu landing case.
+		case idle:
+			run_idle(current_time);
+		}
+
+	}
+	landing_airport.shut_down(end_time);
+	takeoff_airport.shut_down(end_time);
 }

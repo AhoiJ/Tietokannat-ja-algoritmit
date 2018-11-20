@@ -1,6 +1,5 @@
 #pragma once
 #include "Queue.h"
-#include "Plane.h"
 
 class Extended_queue : public Queue {
 public:
