@@ -158,7 +158,7 @@ Error_code Runway_takeoff::takeoffQueueStatus()
 		return fail;
 	}
 	else
-	return success;
+		return success;
 }
 
 void Runway_takeoff::addToSwitchCount()

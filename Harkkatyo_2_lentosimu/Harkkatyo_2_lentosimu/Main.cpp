@@ -239,6 +239,10 @@ void main_3() {
 				takeoff_airport.can_land(current_plane);
 				landing_airport.addToSwitchCount();
 			}
+			else if (landing_airport.landingQueueStatus() == fail && takeoff_airport.takeoffQueueStatus() == success) {
+				takeoff_airport.can_land(current_plane);
+				landing_airport.addToSwitchCount();
+			}
 			else if (landing_airport.can_land(current_plane) != success)
 					current_plane.refuse();
 		}
