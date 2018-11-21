@@ -16,6 +16,7 @@ void run_idle_takeoff(int time);
 void main_1();
 void main_2();
 void main_3();
+void main_4();
 
 int main() {
 	int loops = 0;
@@ -24,7 +25,8 @@ int main() {
 		cout << " This program has multiple versions." << endl
 			<< "Choose 1 if you wish to use the default version." << endl
 			<< "Choose 2 if you wish to use the 2 runway version." << endl
-			<< "Choose 3 if you wish to use the 2 runway with extra usefullness." << endl;
+			<< "Choose 3 if you wish to use the 2 runway with extra usefullness." << endl
+			<< "Choose 4 if you wish to use the 3 runway version." << endl;
 		cin >> choise;
 		if (choise == 1)
 		{
@@ -47,7 +49,14 @@ int main() {
 			main_3();
 			loops = 1;
 		}
-		else if (choise != 1 || choise != 2 || choise == 3) {
+		else if (choise == 4) {
+			cout << endl << "This program simulates an airport with three runways." << endl
+				<< "One of the runways is preserved for landings, one for takeoffs " << endl
+				<< "and the third one is primarily for landings but can be used for takeoffs." << endl;
+			main_4();
+			loops = 1;
+		}
+		else if (choise != 1 || choise != 2 || choise == 3 || choise == 4) {
 			cout << "Enter valid choise." << endl;
 			loops = 0;
 		}
@@ -244,7 +253,7 @@ void main_3() {
 				landing_airport.addToSwitchCount();
 			}
 			else if (landing_airport.can_land(current_plane) != success)
-					current_plane.refuse();
+				current_plane.refuse();
 		}
 
 		int number_departures = variable.poisson(departure_rate); //  current departure requests
@@ -287,4 +296,83 @@ void main_3() {
 	}
 	landing_airport.shut_down(end_time);
 	takeoff_airport.shut_down(end_time);
+}
+
+void main_4() {
+
+	int end_time;            //  time to run simulation
+	int queue_limit;         //  size of Runway queues
+	int flight_number = 0;
+	double arrival_rate, departure_rate;
+	initialize(end_time, queue_limit, arrival_rate, departure_rate);
+	Random variable;
+	Runway_takeoff takeoff_airport(queue_limit);
+	Runway landing_airport(queue_limit);
+	Runway third_airport(queue_limit);
+	for (int current_time = 0; current_time < end_time; current_time++) { //  loop over time intervals
+		int number_arrivals = variable.poisson(arrival_rate);  //  current arrival requests
+		for (int i = 0; i < number_arrivals; i++) {
+			Plane current_plane(flight_number++, current_time, arriving);
+			if (landing_airport.landingQueueStatus() == fail) {
+				third_airport.can_land(current_plane);
+				landing_airport.addToSwitchCount();
+			}
+			else if (landing_airport.can_land(current_plane) != success)
+				current_plane.refuse();
+		}
+
+		int number_departures = variable.poisson(departure_rate); //  current departure requests
+		for (int j = 0; j < number_departures; j++) {
+			Plane current_plane(flight_number++, current_time, departing);
+			if (takeoff_airport.takeoffQueueStatus() == fail && third_airport.landingQueueStatus() == success) {
+				third_airport.can_depart(current_plane);
+				takeoff_airport.addToSwitchCount();
+			}
+			else if (takeoff_airport.can_depart(current_plane) != success)
+				current_plane.refuse();
+		}
+
+		Plane landing_plane;
+		Plane takeoff_plane;
+		Plane third_plane;
+		switch (landing_airport.activity(current_time, landing_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			landing_plane.land(current_time);
+			break;
+		case takingoff:
+			landing_plane.fly(current_time);
+			break;
+		case idle:
+			run_idle_landing(current_time);
+		}
+
+		switch (takeoff_airport.activity(current_time, takeoff_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			takeoff_plane.land(current_time);
+			break;
+		case takingoff:
+			takeoff_plane.fly(current_time);
+			break;
+		case idle:
+			run_idle_takeoff(current_time);
+		}
+
+		switch (third_airport.activity(current_time, third_plane)) {
+			//  Let at most one Plane onto the Runway at current_time.
+		case land:
+			third_plane.land(current_time);
+			break;
+		case takingoff:
+			third_plane.fly(current_time);
+			break;
+		case idle:
+			run_idle(current_time);
+		}
+
+	}
+	landing_airport.shut_down(end_time);
+	takeoff_airport.shut_down(end_time);
+	third_airport.shut_down(end_time);
 }
