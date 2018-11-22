@@ -314,6 +314,9 @@ void main_4() {
 		for (int i = 0; i < number_arrivals; i++) {
 			Plane current_plane(flight_number++, current_time, arriving);
 			if (landing_airport.landingQueueStatus() == fail) {
+				if (third_airport.landingQueueFull() == success)
+					landing_airport.can_land(current_plane);
+				else
 				third_airport.can_land(current_plane);
 				landing_airport.addToSwitchCount();
 			}
