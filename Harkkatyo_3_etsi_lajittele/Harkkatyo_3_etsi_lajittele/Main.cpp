@@ -4,7 +4,6 @@
 #include "Search.h"
 #include "Random.h"
 #include "Timer.h"
-#include "Sortable_list.h"
 
 using namespace std;
 void main2();
@@ -16,7 +15,7 @@ int main()
 	int user_input;
 //	int record_count;
 	List<Record> records;
-	int position;
+//	int position;
 	int input_check = 0;
 	Search search;
 	Random random(false);
@@ -256,7 +255,7 @@ void main4()
 {
 	int record_count;
 	List<Record> records;
-	int position;
+//	int position;
 	int input_check = 0;
 	Search search;
 	Random random(false);
