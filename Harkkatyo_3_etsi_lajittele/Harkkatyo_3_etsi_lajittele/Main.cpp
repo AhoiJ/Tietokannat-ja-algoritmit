@@ -21,43 +21,81 @@ int main()
 		cout << "Select which version of program to run (1 or 2)" << endl;
 
 		cin >> user_input;
-		if (user_input == 1 || user_input == 2)
-				input_check = 1;
+		if (user_input == 1 || user_input == 2 || user_input == 3)
+			input_check = 1;
 		else
-			cout << " Wrong input, please try again." << endl; 
+			cout << " Wrong input, please try again." << endl;
 	}
 	switch (user_input)
 	{
 	case 1:
 	{
-		int target_int;
-		cout << "Give number of records: " << endl;
-		cin >> record_count;
-
-		cout << "Give number to search: " << endl;
-		cin >> target_int;
-
-		cout << "sequential_search:" << endl;
-		cout << "------------------" << endl;
-		for (int i = 1; i < record_count + 1; i++)
+		int randomize;
+		cout << "Would you like to randomize searched record? " << endl
+			<< "(1 for yes 2 for no)";
+		cin >> randomize;
+		
+		if (randomize == 1)
 		{
-			records.insert(i - 1, Record(2 * i - 1));
-		}
+			cout << "Give number of records: " << endl;
+			cin >> record_count;
 
-		Key target(target_int);
+			// randomize
+			int target_int = random.random_integer(0, record_count );
 
-		if (search.sequential_search(records, target, position) == success)
-		{
-			cout << "Status: Successful" << endl;
-			cout << "Key: " << target_int << " position: " << position << endl;
-			//cout << Key::comparisons << endl;
+			cout << "sequential_search:" << endl;
+			cout << "------------------" << endl;
+			for (int i = 1; i < record_count + 1; i++)
+			{
+				records.insert(i - 1, Record(2 * i - 1));
+			}
+
+			Key target(target_int);
+
+			if (search.sequential_search(records, target, position) == success)
+			{
+				cout << "Status: Successful" << endl;
+				cout << "Key: " << target_int << " position: " << position << endl;
+				cout << "Number of comparisons done: " << Key::comparisons << endl;
+			}
+			else
+			{
+				cout << "Status: Unsuccessful" << endl;
+			}
+			break;
 		}
 		else
 		{
-			cout << "Status: Unsuccessful" << endl;
+			int target_int_self;
+			cout << "Give number of records: " << endl;
+			cin >> record_count;
+
+			cout << "Give number to search: " << endl;
+			cin >> target_int_self;
+
+			cout << "sequential_search:" << endl;
+			cout << "------------------" << endl;
+			for (int i = 1; i < record_count + 1; i++)
+			{
+				records.insert(i - 1, Record(2 * i - 1));
+			}
+
+			Key target(target_int_self);
+
+			if (search.sequential_search(records, target, position) == success)
+			{
+				cout << "Status: Successful" << endl;
+				cout << "Key: " << target_int_self << " position: " << position << endl;
+				cout << "Number of comparisons done: " << Key::comparisons << endl;
+			}
+			else
+			{
+				cout << "Status: Unsuccessful" << endl;
+			}
+			break;
 		}
-		break;
 	}
+
 	case 2:
 	{
 		double sequential_successful_time = 0;
@@ -164,6 +202,14 @@ int main()
 		cout << "Elapsed time per search: " << binary_unsuccessful_time / unsuccessful_binary_search_counter << endl;
 		cout << "Comparisons per search: " << unsuccessful_binary_comparisons / unsuccessful_binary_search_counter << endl;
 		cout << "Searches: 10" << endl;
+
+
+	}
+	case 3:
+	{
+
+
+
 
 
 	}
