@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Key.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Ordered_list.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Record.cpp" />

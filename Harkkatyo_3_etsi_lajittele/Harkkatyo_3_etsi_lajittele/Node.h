@@ -9,7 +9,7 @@ struct Node {
 	//  constructors
 	Node();
 	Node(Node_entry, Node<Node_entry> *link_back = NULL,
-		Node<Node_entry> *link_next = NULL);
+Node<Node_entry> *link_next = NULL);
 };
 
 template <class List_entry>
@@ -19,8 +19,8 @@ Node<List_entry>::Node()
 	//back = NULL;
 }
 
-template <class List_entry>
-Node<List_entry>::Node(List_entry data, Node<List_entry> *link_back, Node<List_entry> *link_next)
+template <class Node_entry>
+Node<Node_entry>::Node(Node_entry data, Node<Node_entry> *link_back, Node<Node_entry> *link_next)
 {
 	entry = data;
 	next = link_next;

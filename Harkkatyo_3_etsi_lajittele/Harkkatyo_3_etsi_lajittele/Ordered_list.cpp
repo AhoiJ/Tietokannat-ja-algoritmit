@@ -26,7 +26,7 @@ Else: the function fails with the diagnostic Error_code overflow.
 }
 
 
-Error_code Ordered_list::insert(int position, const Record &data)
+Error_code Ordered_list::insertPos(int position, const Record &data)
 /*
 Post: If the Ordered_list is not full, 0 <= position <= n,
 where n is the number of entries in the list,
