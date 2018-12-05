@@ -128,12 +128,12 @@ Otherwise the function fails with an error code of range_error.
 */
 
 {
-	//Node<List_entry> *current;
+//	Node<List_entry> *current;
 	if (position < 0 || position >= count)
 	{
 		return utility_range_error;
 	}
-	//current = set_position(position);
+//	current = set_position(position);
 	set_position(position);
 	x = current->entry;
 	return success;

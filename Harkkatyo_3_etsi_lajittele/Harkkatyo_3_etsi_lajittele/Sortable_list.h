@@ -1,4 +1,5 @@
 #pragma once
+#include "Record.h"
 
 template <class Record>
 class Sortable_list :public List<Record> {
