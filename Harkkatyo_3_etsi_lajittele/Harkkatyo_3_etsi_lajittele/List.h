@@ -25,13 +25,15 @@ public:
 protected:
 	//  Data members for the linked list implementation now follow.
 	int count;
-	Node<List_entry> *head;
+	//Node<List_entry> *head;
 	mutable int current_position;
 	mutable Node<List_entry> *current;
 
 	//  The following auxiliary function is used to locate list positions
+	//void set_position(int position) const;
 	void set_position(int position) const;
 };
+
 
 template <class List_entry>
 List<List_entry>::List()
@@ -43,36 +45,39 @@ Post: The List is initialized to be empty.
 
 {
 	count = 0;
-	head = NULL;
+	current = NULL;
+	current_position = -1;
+//	head = NULL;
 }
 
 template <class List_entry>
 void List<List_entry>::clear()
 /*
-
 Post: The List is cleared.
-
 */
 
 {
 	Node<List_entry> *p, *q;
+	if (current == NULL) return;
 
-	for (p = head; p; p = q) {
+	for (p = current->back; p; p = q) {
+		q = p->back;
+		delete[] p;
+	}
+	for (p = current; p; p = q) {
 		q = p->next;
-		delete p;
+		delete[] p;
 	}
 	count = 0;
-	head = NULL;
+	current = NULL;
+	current_position = -1;
 }
 
 template <class List_entry>
 int List<List_entry>::size() const
 /*
-
 Post: The function returns the number of entries in the List.
-
 */
-
 {
 	return count;
 }
@@ -80,11 +85,8 @@ Post: The function returns the number of entries in the List.
 template <class List_entry>
 bool List<List_entry>::empty() const
 /*
-
 Post: The function returns true or false according as the List is empty or not.
-
 */
-
 {
 	return count <= 0;
 }
@@ -94,7 +96,6 @@ bool List<List_entry>::full() const
 /*
 Post: The function returns 1 or 0 according as the List is full or not.
 */
-
 {
 	return false;
 }
@@ -109,32 +110,32 @@ entry of the List, beginning at position 0 and doing each in turn.
 */
 
 {
-	Node<List_entry> *q;
-
-	for (q = head; q; q = q->next)
-		(*visit)(q->entry);
+	Node<List_entry> *to_visit = current;
+	if (to_visit != NULL)
+		for (; to_visit->back; to_visit = to_visit->back)
+			;
+	for (: to_visit; to_visit = to_visit->next)
+		(*visit)(to_visit->entry);
 }
 
 template <class List_entry>
 Error_code List<List_entry>::retrieve(int position, List_entry &x) const
 /*
-
 Post: If the List is not full and 0 <= position < n,
 where n is the number of entries in the List,
 the function succeeds:
 The entry in position is copied to x.
 Otherwise the function fails with an error code of range_error.
-
 */
 
 {
-	Node<List_entry> *current;
+	//Node<List_entry> *current;
 	if (position < 0 || position >= count)
 	{
 		return utility_range_error;
 	}
-	current = set_position(position);
-	//set_position(position);
+	//current = set_position(position);
+	set_position(position);
 	x = current->entry;
 	return success;
 }
@@ -142,20 +143,17 @@ Otherwise the function fails with an error code of range_error.
 template <class List_entry>
 Error_code List<List_entry>::replace(int position, const List_entry &x)
 /*
-
 Post: If 0 <= position < n,
 where n is the number of entries in the List,
 the function succeeds:
 The entry in position is replaced by x,
 all other entries remain unchanged.
 Otherwise the function fails with an error code of range_error.
-
 */
 
 {
-	Node<List_entry> *current;
 	if (position < 0 || position >= count) return utility_range_error;
-	current = set_position(position);
+	set_position(position);
 	current->entry = x;
 	return success;
 }
@@ -177,23 +175,22 @@ Otherwise the function fails with a diagnostic error code.
 template <class List_entry>
 Error_code List<List_entry>::remove(int position, List_entry &x)
 {
-	Node<List_entry> *prior, *current;
+	Node<List_entry> *old_node, *neighbor;
 	if (count == 0) return fail;
 	if (position < 0 || position >= count) return utility_range_error;
-
-	if (position > 0) {
-		prior = set_position(position - 1);
-		current = prior->next;
-		prior->next = current->next;
+	set_position(position);
+	old_node = current;
+	if (neighbor = current->back) neighbor->next = current->next;
+	if (neighbor = current->next) {
+		neighbor->back = current->back;
+		current = neighbor;
 	}
-
 	else {
-		current = head;
-		head = head->next;
+		current = current->back;
+		current_position--;
 	}
-
-	x = current->entry;
-	delete current;
+	x = old_node->entry;
+	delete [] old_node;
 	count--;
 	return success;
 }
@@ -201,11 +198,8 @@ Error_code List<List_entry>::remove(int position, List_entry &x)
 template <class List_entry>
 List<List_entry>::~List()
 /*
-
 Post: The List is empty: all entries have been removed.
-
 */
-
 {
 	clear();
 }
@@ -213,22 +207,27 @@ Post: The List is empty: all entries have been removed.
 template <class List_entry>
 List<List_entry>::List(const List<List_entry> &copy)
 /*
-
 Post: The List is initialized to copy the parameter copy.
-
 */
-
 {
 	count = copy.count;
-	Node<List_entry> *new_node, *old_node = copy.head;
+	current_position = copy.current_position;
+	Node<List_entry> *new_node, *old_node = copy.current;
 
-	if (old_node == NULL) head = NULL;
+	if (old_node == NULL) current = NULL;
 	else {
-		new_node = head = new Node<List_entry>(old_node->entry);
+		new_node = current = new Node<List_entry>(old_node->entry);
 		while (old_node->next != NULL) {
 			old_node = old_node->next;
-			new_node->next = new Node<List_entry>(old_node->entry);
+			new_node->next = new Node<List_entry>(old_node->entry,new_node);
 			new_node = new_node->next;
+		}
+		old_node = copy.current;
+		new_node = current;
+		while (old_node->back != NULL) {
+			old_node = old_node -> back;
+			new_node->back = new Node<List_entry>(old_node->entry, NULL, new_node);
+			new_node = new_node->back;
 		}
 	}
 }
@@ -236,22 +235,21 @@ Post: The List is initialized to copy the parameter copy.
 template <class List_entry>
 void List<List_entry>::operator =(const List<List_entry> &copy)
 /*
-
 Post: The List is assigned to copy a parameter
-
 */
-
 {
 	List new_copy(copy);
 	clear();
 	count = new_copy.count;
-	head = new_copy.head;
+	current_position = new_copy.current_position;
+	current = new_copy.current;
 	new_copy.count = 0;
-	new_copy.head = NULL;
+	new_copy.current_position = 0;
+	new_copy.current = NULL;
 }
 
 template <class List_entry>
-Void List<List_entry>::set_position(int position) const
+void List<List_entry>::set_position(int position) const
 /*
 Pre:  position is a valid position in the List: 0 <= position < count.
 Post: The current Node pointer references the Node at position.
@@ -304,3 +302,13 @@ Else: the function fails with a diagnostic error code.
 	count++;
 	return success;
 }
+/*
+template<class List_entry>
+inline Node<List_entry>* List<List_entry>::set_position(int position) const
+{
+	Node <List_entry>*q = head;
+	for (int i = 0; i < position; i++)
+		q = q->next;
+	return q;
+}
+*/

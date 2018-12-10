@@ -3,7 +3,7 @@
 inline Ordered_list::Ordered_list()
 {
 	count = 0;
-	head = NULL;
+//	head = NULL;
 }
 
 Error_code Ordered_list::insert(const Record &data)

@@ -302,7 +302,7 @@ void main4()
 		records.retrieve(i, x);
 		cout << x.get_key_data() << endl;
 	}
-
+	
 }
 
 void main5() {
