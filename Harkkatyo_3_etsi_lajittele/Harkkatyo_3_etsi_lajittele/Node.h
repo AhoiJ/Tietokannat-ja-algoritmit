@@ -1,5 +1,7 @@
 #pragma once
+#include <iostream>
 
+using namespace std;
 
 template <class Node_entry>
 struct Node {

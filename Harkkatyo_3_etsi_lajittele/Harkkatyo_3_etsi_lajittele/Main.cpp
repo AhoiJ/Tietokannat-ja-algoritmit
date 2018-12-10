@@ -307,7 +307,6 @@ void main4()
 }
 
 void main5() {
-/*
 	int record_count;
 	Sortable_list <Record> records;
 	//List<Record> records;
@@ -318,6 +317,39 @@ void main5() {
 	int record_check_size;
 	Record x;
 
-	*/
+	cout << "How many random records do you want?" << endl;
+	cin >> record_count;
+	do {
+		cout << "How many records do you want shown?" << endl;
+		cin >> record_check_size;
+
+		if (record_check_size > record_count || record_check_size < 0)
+			cout << "Input is not correct, size must be less than record amount and more than 0" << endl;
+	} while (record_check_size > record_count || record_check_size < 0);
+
+	for (int i = 0; i < record_count; i++)
+	{
+		int target_int = random.random_integer(0, record_count * 10);
+		records.insert(i, target_int);
+	}
+	cout << "These are the first " << record_check_size
+		<< " elements of record array before sorting." << endl;
+
+	for (int i = 0; i < record_check_size; i++)
+	{
+		records.retrieve(i, x);
+		cout << x.get_key_data() << endl;
+	}
+
+	records.quick_sort();
+
+	cout << "These are the first " << record_check_size
+		<< " elements of record array after sorting." << endl;
+
+	for (int i = 0; i < record_check_size; i++)
+	{
+		records.retrieve(i, x);
+		cout << x.get_key_data() << endl;
+	}
 
 }
