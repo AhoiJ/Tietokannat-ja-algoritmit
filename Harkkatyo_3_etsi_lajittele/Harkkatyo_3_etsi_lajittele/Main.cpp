@@ -4,6 +4,7 @@
 #include "Search.h"
 #include "Random.h"
 #include "Timer.h"
+#include "Sortable_list.h"
 
 using namespace std;
 void main2();
@@ -254,7 +255,8 @@ void main3()
 void main4()
 {
 	int record_count;
-	List<Record> records;
+	Sortable_list <Record> records;
+	//List<Record> records;
 //	int position;
 	int input_check = 0;
 	Search search;
@@ -286,10 +288,15 @@ void main4()
 		cout << x.get_key_data() << endl;
 	}
 
-	// Record randomizer tähä
-	
+	records.insertion_sort();// Sort the list
 
+	cout << "These are the first " << record_check_size
+		<< " elements of record array after sorting." << endl;
 
-
+	for (int i = 0; i < record_check_size; i++)
+	{
+		records.retrieve(i, x);
+		cout << x.get_key_data() << endl;
+	}
 
 }
