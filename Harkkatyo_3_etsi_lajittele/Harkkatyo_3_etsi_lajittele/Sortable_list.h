@@ -10,6 +10,9 @@ class Sortable_list :public List<Record> {
 public:
 	Sortable_list();
 	void insertion_sort();
+	void selection_sort();
+	int max_key(int low, int high);
+	void swap(int low, int high);
 private: //  Add prototypes for auxiliary functions here.
 };
 
@@ -68,3 +71,51 @@ inline Sortable_list<Record>::Sortable_list()
 {
 
 }
+
+
+template <class Record>
+void Sortable_list<Record>::selection_sort()
+/*
+Post: The entries of the Sortable_list have been rearranged so that
+the keys in all the entries are sorted into nondecreasing order.
+Uses: max_key, swap.
+*/
+{
+	for (int position = count - 1; position > 0; position--) {
+		int max = max_key(0, position);
+		swap(max, position);
+	}
+}
+
+
+template <class Record>
+int Sortable_list<Record>::max_key(int low, int high)
+/*
+Pre:  low and high are valid positions in the Sortable_list and low <= high.
+Post: The position of the entry between low and high with the largest
+key is returned.
+Uses: The class Record, the contiguous List implementation of Chapter 6.
+*/
+{
+	int largest, current;
+	largest = low;
+	for (current = low + 1; current <= high; current++)
+		if (entry[largest] < entry[current])
+			largest = current;
+	return largest;
+}
+
+template <class Record>
+void Sortable_list<Record>::swap(int low, int high)
+/*
+Pre:  low and high are valid positions in the Sortable_list.
+Post: The entry at position low is swapped with the entry at position high.
+Uses: The contiguous List implementation of Chapter 6.
+*/
+{
+	Record temp;
+	temp = entry[low];
+	entry[low] = entry[high];
+	entry[high] = temp;
+}
+

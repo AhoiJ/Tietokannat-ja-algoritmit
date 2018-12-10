@@ -1,5 +1,6 @@
 #pragma once
 #include "Key.h"
+#include "Node.h"
 
 class Record {
 public:

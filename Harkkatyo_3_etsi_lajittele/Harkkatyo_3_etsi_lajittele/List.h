@@ -2,6 +2,8 @@
 #include "Node.h"
 #include "Utility.h"
 
+const int max_list = 1000;
+
 template <class List_entry>
 class List {
 public:
@@ -25,12 +27,11 @@ public:
 protected:
 	//  Data members for the linked list implementation now follow.
 	int count;
-	//Node<List_entry> *head;
 	mutable int current_position;
 	mutable Node<List_entry> *current;
+	List_entry entry[max_list];
 
 	//  The following auxiliary function is used to locate list positions
-	//void set_position(int position) const;
 	void set_position(int position) const;
 };
 
@@ -62,15 +63,15 @@ Post: The List is cleared.
 
 	for (p = current->back; p; p = q) {
 		q = p->back;
-		delete[] p;
+		delete p;
 	}
 	for (p = current; p; p = q) {
 		q = p->next;
-		delete[] p;
+		delete p;
 	}
 	count = 0;
 	current = NULL;
-	current_position = -1;
+	//current_position = -1;
 }
 
 template <class List_entry>
@@ -201,7 +202,7 @@ List<List_entry>::~List()
 Post: The List is empty: all entries have been removed.
 */
 {
-	clear();
+//	clear();
 }
 
 template <class List_entry>

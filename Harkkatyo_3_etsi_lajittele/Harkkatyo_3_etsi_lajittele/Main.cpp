@@ -293,6 +293,7 @@ void main4()
 	}
 
 	records.insertion_sort(); // Sort the list
+	records.selection_sort(); // Just for funsies
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
