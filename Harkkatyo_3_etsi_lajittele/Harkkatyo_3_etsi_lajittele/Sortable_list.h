@@ -1,6 +1,9 @@
 #pragma once
+#include <iostream>
 #include "Record.h"
 #include "Node.h"
+
+using namespace std;
 
 template <class Record>
 class Sortable_list :public List<Record> {

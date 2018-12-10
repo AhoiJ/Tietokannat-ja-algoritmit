@@ -10,6 +10,7 @@ using namespace std;
 void main2();
 void main3();
 void main4();
+void main5();
 
 int main()
 {
@@ -22,10 +23,10 @@ int main()
 	Random random(false);
 
 	while (input_check != 1) {
-		cout << "Select which version of program to run (1 , 2 or 3)" << endl;
+		cout << "Select which version of program to run (1 , 2, 3 or 4)" << endl;
 
 		cin >> user_input;
-		if (user_input == 1 || user_input == 2 || user_input == 3)
+		if (user_input == 1 || user_input == 2 || user_input == 3 || user_input == 4)
 			input_check = 1;
 		else
 			cout << " Wrong input, please try again." << endl;
@@ -41,15 +42,18 @@ int main()
 	case 2:
 	{
 		main3();
-
 		break;
 	}
 	case 3:
 	{
 		main4();
-
+		break;
 	}
-
+	case 4:
+	{
+		main5();
+		break;
+	}
 	}
 
 	system("pause");
@@ -288,7 +292,7 @@ void main4()
 		cout << x.get_key_data() << endl;
 	}
 
-	records.insertion_sort();// Sort the list
+	records.insertion_sort(); // Sort the list
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
@@ -298,5 +302,21 @@ void main4()
 		records.retrieve(i, x);
 		cout << x.get_key_data() << endl;
 	}
+
+}
+
+void main5() {
+/*
+	int record_count;
+	Sortable_list <Record> records;
+	//List<Record> records;
+	//	int position;
+	int input_check = 0;
+	Search search;
+	Random random(false);
+	int record_check_size;
+	Record x;
+
+	*/
 
 }

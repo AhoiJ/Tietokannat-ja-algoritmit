@@ -128,13 +128,13 @@ Otherwise the function fails with an error code of range_error.
 */
 
 {
-//	Node<List_entry> *current;
+	Node<List_entry> *current;
 	if (position < 0 || position >= count)
 	{
 		return utility_range_error;
 	}
-//	current = set_position(position);
-	set_position(position);
+	current = set_position(position);
+	//set_position(position);
 	x = current->entry;
 	return success;
 }
@@ -154,7 +154,7 @@ Otherwise the function fails with an error code of range_error.
 
 {
 	Node<List_entry> *current;
-	if (position < 0 || position >= count) return range_error;
+	if (position < 0 || position >= count) return utility_range_error;
 	current = set_position(position);
 	current->entry = x;
 	return success;
@@ -179,7 +179,7 @@ Error_code List<List_entry>::remove(int position, List_entry &x)
 {
 	Node<List_entry> *prior, *current;
 	if (count == 0) return fail;
-	if (position < 0 || position >= count) return range_error;
+	if (position < 0 || position >= count) return utility_range_error;
 
 	if (position > 0) {
 		prior = set_position(position - 1);
@@ -251,18 +251,21 @@ Post: The List is assigned to copy a parameter
 }
 
 template <class List_entry>
-void List<List_entry>::set_position(int position) const
+Void List<List_entry>::set_position(int position) const
 /*
 Pre:  position is a valid position in the List: 0 <= position < count.
 Post: The current Node pointer references the Node at position.
 */
 {
+	
 	if (current_position <= position)
 		for (; current_position != position; current_position++)
 			current = current->next;
 	else
 		for (; current_position != position; current_position--)
 			current = current->back;
+			
+
 }
 
 
