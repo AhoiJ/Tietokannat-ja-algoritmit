@@ -13,12 +13,13 @@ public:
 	void selection_sort();
 	int max_key(int low, int high);
 	void swap(int low, int high);
-	void Sortable_list<Record>::quick_sort();
-	void Sortable_list<Record>::recursive_quick_sort(int low, int high);
-	int Sortable_list<Record>::partition(int low, int high);
-
+	void Sortable_list<Record>::merge_sort();
+	void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list);
+	Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list);
+	Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second);
 
 private: //  Add prototypes for auxiliary functions here.
+
 };
 
 template <class Record>
@@ -123,72 +124,100 @@ Uses: The contiguous List implementation of Chapter 6.
 	entry[low] = entry[high];
 	entry[high] = temp;
 }
-// QuickSORT
+
+// MERGESORT
 
 template <class Record>
-void Sortable_list<Record>::quick_sort()
+void Sortable_list<Record>::merge_sort()
 /*
-Post: The entries of the Sortable_list have been rearranged so
-that their keys are sorted into nondecreasing order.
-Uses: The contiguous List implementation of Chapter 6, recursive_quick_sort.
+Post: The entries of the sortable list have been rearranged so that
+their keys are sorted into nondecreasing order.
+Uses: The linked List implementation of Chapter 6 and recursive_merge_sort.
 */
 {
-	recursive_quick_sort(0, count - 1);
+	recursive_merge_sort(head); // Mikä tämä head????
 }
 
-
 template <class Record>
-void Sortable_list<Record>::recursive_quick_sort(int low, int high)
+void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
 /*
-Pre:  low and high are valid positions in the Sortable_list.
-Post: The entries of the Sortable_list have been
-rearranged so that their keys are sorted into nondecreasing order.
-Uses: The contiguous List implementation of Chapter 6,
-recursive_quick_sort, and partition.
+Post: The nodes referenced by sub_list have been rearranged so that their
+keys are sorted into nondecreasing order.  The pointer parameter
+sub_list is reset to point at the node containing the smallest key.
+Uses: The linked List implementation of Chapter 6;
+the functions divide_from, merge, and recursive_merge_sort.
 */
 {
-	int pivot_position;
-	if (low < high) {   //   Otherwise, no sorting is needed.
-		pivot_position = partition(low, high);
-		recursive_quick_sort(low, pivot_position - 1);
-		recursive_quick_sort(pivot_position + 1, high);
+	if (sub_list != NULL && sub_list->next != NULL) {
+		Node<Record> *second_half = divide_from(sub_list);
+		recursive_merge_sort(sub_list);
+		recursive_merge_sort(second_half);
+		sub_list = merge(sub_list, second_half);
 	}
 }
-
+/*
+Post: The list of nodes referenced by sub_list has been reduced
+to its first half, and a pointer to the first node in the second half
+of the sublist is returned.  If the sublist has an odd number of
+entries, then its first half will be one entry larger than its second.
+Uses: The linked List implementation of Chapter 6.
+*/
 
 template <class Record>
-int Sortable_list<Record>::partition(int low, int high)
-/*
-Pre:  low and high are valid positions of the Sortable_list, with low <= high.
-Post: The center (or left center) entry in the range between indices
-low and high of the Sortable_list
-has been chosen as a pivot.  All entries of the Sortable_list
-between indices low and high, inclusive, have been
-rearranged so that those with keys less than the pivot come
-before the pivot and the remaining entries come
-after the pivot.  The final position of the pivot is returned.
-Uses: swap(int i, int j) (interchanges entries in positions
-i and j of a Sortable_list), the contiguous List implementation
-of Chapter 6, and methods for the class Record.
-*/
+Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
 {
-	Record pivot;
-	int i,            //  used to scan through the list
-		last_small;   //  position of the last key less than pivot
-	swap(low, (low + high) / 2);
-	pivot = entry[low];   //  First entry is now pivot.
-	last_small = low;
-	for (i = low + 1; i <= high; i++)
-		/*
-		At the beginning of each iteration of this loop, we have the following
-		conditions:
-		If low < j <= last_small then entry[j].key < pivot.
-		If last_small < j < i then entry[j].key >= pivot.
-		*/
-		if (entry[i] < pivot) {
-			last_small = last_small + 1;
-			swap(last_small, i);  //  Move large entry to right and small to left.
+	Node<Record> *position, //  traverses the entire list
+		*midpoint, //  moves at half speed of position to midpoint
+		*second_half;
+
+	if ((midpoint = sub_list) == NULL) return NULL;  //  List is empty.
+	position = midpoint->next;
+	while (position != NULL) { //  Move position twice for midpoint's one move.
+		position = position->next;
+		if (position != NULL) {
+			midpoint = midpoint->next;
+			position = position->next;
 		}
-	swap(low, last_small);      //  Put the pivot into its proper position.
-	return last_small;
+	}
+	second_half = midpoint->next;
+	midpoint->next = NULL;
+	return second_half;
+}
+
+/*
+Pre:  first and second point to ordered lists of nodes.
+Post: A pointer to an ordered list of nodes is returned.
+The ordered list contains all entries that were referenced by
+first and second.  The original lists of nodes referenced
+by first and second are no longer available.
+Uses: Methods for Record class; the linked List implementation of Chapter 6.
+*/
+
+template <class Record>
+Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second)
+{
+	Node <Record> *last_sorted; //  points to the last node of sorted list
+	Node <Record> combined;     //  dummy first node, points to merged list
+
+	last_sorted = &combined;
+	while (first != NULL && second != NULL) { //  Attach node with smaller key
+		if (first->entry <= second->entry) {
+			last_sorted->next = first;
+			last_sorted = first;
+			first = first->next;   //  Advance to the next unmerged node.
+		}
+		else {
+			last_sorted->next = second;
+			last_sorted = second;
+			second = second->next;
+		}
+	}
+
+	//  After one list ends, attach the remainder of the other.
+	if (first == NULL) {
+		last_sorted->next = second;
+	}
+	else
+		last_sorted->next = first;
+	return combined.next;
 }

@@ -318,20 +318,29 @@ void main5() {
 	Record x;
 
 	cout << "How many random records do you want?" << endl;
-	cin >> record_count;
+	cin >> record_count; // user inputs records size
 	do {
 		cout << "How many records do you want shown?" << endl;
-		cin >> record_check_size;
-
-		if (record_check_size > record_count || record_check_size < 0)
+		cin >> record_check_size; // shown records size
+		
+		// Input check 
+		if (record_check_size > record_count || record_check_size < 0) 
 			cout << "Input is not correct, size must be less than record amount and more than 0" << endl;
 	} while (record_check_size > record_count || record_check_size < 0);
 
+	// Insert records
 	for (int i = 0; i < record_count; i++)
 	{
 		int target_int = random.random_integer(0, record_count * 10);
 		records.insert(i, target_int);
 	}
+	/*
+	// Scramble records
+	for (int i = 0; i < record_count / 2; i++) {
+		records.retrieve(i * 2, x);
+		records.replace(i,x);
+	}
+	*/
 	cout << "These are the first " << record_check_size
 		<< " elements of record array before sorting." << endl;
 
@@ -341,7 +350,7 @@ void main5() {
 		cout << x.get_key_data() << endl;
 	}
 
-	records.quick_sort();
+	records.merge_sort(); // merge sort puuttuu "head" muuttuja, ja varmaa jotain node functioita.
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;

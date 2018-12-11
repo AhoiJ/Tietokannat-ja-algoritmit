@@ -20,6 +20,8 @@ public:
 	Error_code remove(int position, List_entry &x);
 	Error_code insert(int position, const List_entry &x);
 
+	Node <List_entry> *head;
+
 	//  The following methods replace compiler-generated defaults.
 	~List();
 	List(const List<List_entry> &copy);
@@ -33,6 +35,10 @@ protected:
 
 	//  The following auxiliary function is used to locate list positions
 	void set_position(int position) const;
+	// Mergesort functions
+	Node<List_entry> *set_pos(int position) const;
+	Error_code List<List_entry>::insertM(int position, const List_entry &x);
+	
 };
 
 
@@ -313,3 +319,46 @@ inline Node<List_entry>* List<List_entry>::set_position(int position) const
 	return q;
 }
 */
+
+// Mergesort
+
+template <class List_entry>
+Node<List_entry> *List<List_entry>::set_pos(int position) const
+/*
+Pre:  position is a valid position in the List; 0 <= position < count.
+Post: Returns a pointer to the Node in position.
+*/
+{
+	Node<List_entry> *q = head;
+	for (int i = 0; i < position; i++) q = q->next;
+	return q;
+}
+
+template <class List_entry>
+Error_code List<List_entry>::insertM(int position, const List_entry &x)
+/*
+Post: If the List is not full and 0 <= position <= n,
+where n is the number of entries in the List, the function succeeds:
+Any entry formerly at position and all later entries have their position
+numbers increased by 1, and x is inserted at position of the List.
+Else: The function fails with a diagnostic error code.
+*/
+{
+	if (position < 0 || position > count)
+		return range_error;
+	Node<List_entry> *new_node, *previous, *following;
+	if (position > 0) {
+		previous = set_position(position - 1);
+		following = previous->next;
+	}
+	else following = head;
+	new_node = new Node<List_entry>(x, following);
+	if (new_node == NULL)
+		return overflow;
+	if (position == 0)
+		head = new_node;
+	else
+		previous->next = new_node;
+	count++;
+	return success;
+}

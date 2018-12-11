@@ -12,7 +12,7 @@ struct Node {
 	//  constructors
 	Node();
 	Node(Node_entry, Node<Node_entry> *link_back = NULL,
-Node<Node_entry> *link_next = NULL);
+				Node<Node_entry> *link_next = NULL);
 	
 };
 
