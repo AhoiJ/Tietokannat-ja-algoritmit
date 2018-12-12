@@ -350,7 +350,7 @@ void main5() {
 		cout << x.get_key_data() << endl;
 	}
 
-	records.merge_sort(); // merge sort puuttuu "head" muuttuja, ja varmaa jotain node functioita.
+	records.merge_sort(); // merge sort puuttuu "head" muuttuja, ja varmaa jotain node funktioita.
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;

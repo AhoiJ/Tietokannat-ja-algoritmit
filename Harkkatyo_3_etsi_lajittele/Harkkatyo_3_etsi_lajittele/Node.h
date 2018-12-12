@@ -6,6 +6,7 @@ using namespace std;
 template <class Node_entry>
 struct Node {
 	//  data members
+	//index next;
 	Node_entry entry;
 	Node<Node_entry> *next;
 	Node<Node_entry> *back;
