@@ -2,8 +2,7 @@
 #include "Node.h"
 #include "Utility.h"
 
-const int max_list = 1000;
-typedef int index;
+//const int max_list = 1000;
 
 template <class List_entry>
 class List {
@@ -28,34 +27,20 @@ public:
 	List(const List<List_entry> &copy);
 	void operator =(const List<List_entry> &copy);
 protected:
-	//  Data members for the linked list implementation now follow.
-	Node<List_entry> workspace[max_list];//种种
-	index available, last_used, hedu;//种种
+
 
 	int count;
 	mutable int current_position;
 	mutable Node<List_entry> *current;
-	List_entry entry[max_list];
+
 
 	//  The following auxiliary function is used to locate list positions
 	void set_position(int position) const;
 
-	// Mergesort functions
-	Node<List_entry> *set_pos(int position) const;
-	Error_code List<List_entry>::insertM(int position, const List_entry &x);
-	/*
-	// Index juttuja
-	index new_node();	void delete_node(index n);	int current_position(index n) const;	index set_posIndex(int position) const;
-	*/
 
 };
 
-/*		INDEX JUTTUJA	
-template <class List_entry>index List<List_entry>::new_node()Post: The index of the first available Node in workspace is returned;the data members available, last_used, and workspace are updatedas necessary.  If the work-space is already full, -1 is returned.{	index new_index;	if (available != -1) {		new_index = available;		available = workspace[available].next;	}	else if (last_used < max_list - 1) {		new_index = ++last_used;	}	else return -1;	workspace[new_index].next = -1;	return new_index;}
 
-template <class List_entry>void List<List_entry>::delete_node(index old_index)Pre:  The List has a Node stored at index old_index.Post: The List index old_index is pushed onto the linked stackof available space; available, last_used, and workspace areupdated as necessary.{	index previous;	if (old_index == head) head = workspace[old_index].next;	else {		previous = set_position(current_position(old_index) - 1);		workspace[previous].next = workspace[old_index].next;	}	workspace[old_index].next = available;	available = old_index;}
-
-    INDEX JUTTUJA LOPPU		*/
 
 template <class List_entry>
 List<List_entry>::List()
@@ -335,45 +320,3 @@ inline Node<List_entry>* List<List_entry>::set_position(int position) const
 }
 */
 
-// Mergesort
-
-template <class List_entry>
-Node<List_entry> *List<List_entry>::set_pos(int position) const
-/*
-Pre:  position is a valid position in the List; 0 <= position < count.
-Post: Returns a pointer to the Node in position.
-*/
-{
-	Node<List_entry> *q = head;
-	for (int i = 0; i < position; i++) q = q->next;
-	return q;
-}
-
-template <class List_entry>
-Error_code List<List_entry>::insertM(int position, const List_entry &x)
-/*
-Post: If the List is not full and 0 <= position <= n,
-where n is the number of entries in the List, the function succeeds:
-Any entry formerly at position and all later entries have their position
-numbers increased by 1, and x is inserted at position of the List.
-Else: The function fails with a diagnostic error code.
-*/
-{
-	if (position < 0 || position > count)
-		return range_error;
-	Node<List_entry> *new_node, *previous, *following;
-	if (position > 0) {
-		previous = set_position(position - 1);
-		following = previous->next;
-	}
-	else following = head;
-	new_node = new Node<List_entry>(x, following);
-	if (new_node == NULL)
-		return overflow;
-	if (position == 0)
-		head = new_node;
-	else
-		previous->next = new_node;
-	count++;
-	return success;
-}

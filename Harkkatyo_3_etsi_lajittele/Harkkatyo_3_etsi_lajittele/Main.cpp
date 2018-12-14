@@ -5,8 +5,10 @@
 #include "Random.h"
 #include "Timer.h"
 #include "Sortable_list.h"
+#include "ListMerge.h"
 
 using namespace std;
+
 void main2();
 void main3();
 void main4();
@@ -306,9 +308,10 @@ void main4()
 	
 }
 
+//	TEE TAMA ListMerge<Records>
 void main5() {
 	int record_count;
-	Sortable_list <Record> records;
+	ListMerge <Record> records;
 	//List<Record> records;
 	//	int position;
 	int input_check = 0;
@@ -350,7 +353,7 @@ void main5() {
 		cout << x.get_key_data() << endl;
 	}
 
-	records.merge_sort(); // merge sort puuttuu "head" muuttuja, ja varmaa jotain node funktioita.
+	records.merge_sort(); 
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;

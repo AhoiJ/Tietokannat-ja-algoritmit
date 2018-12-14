@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Key.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="ListMerge.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Ordered_list.h" />
     <ClInclude Include="Random.h" />

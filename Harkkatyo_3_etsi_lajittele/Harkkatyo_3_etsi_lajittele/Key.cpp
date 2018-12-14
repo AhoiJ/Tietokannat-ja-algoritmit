@@ -1,4 +1,5 @@
 #include "Key.h"
+#include <iostream>
 
 int Key::comparisons = 0;
 
@@ -46,4 +47,15 @@ Key::Key(int x)
 int Key::the_key() const
 {
 	return key;
+}
+
+void Key::operator = (const Key &original)
+{
+	Key::assignments++;
+	key = original.key;
+}
+
+ostream& operator << (ostream& os, const Key& k)
+{
+	return os << k.the_key();
 }

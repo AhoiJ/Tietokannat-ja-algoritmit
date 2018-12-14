@@ -13,10 +13,10 @@ public:
 	void selection_sort();
 	int max_key(int low, int high);
 	void swap(int low, int high);
-	void Sortable_list<Record>::merge_sort();
-	void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list);
-	Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list);
-	Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second);
+	//void Sortable_list<Record>::merge_sort();
+	//void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list);
+	//Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list);
+	//Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second);
 
 private: //  Add prototypes for auxiliary functions here.
 
@@ -125,28 +125,28 @@ Uses: The contiguous List implementation of Chapter 6.
 	entry[high] = temp;
 }
 
+/*
 // MERGESORT
-
 template <class Record>
 void Sortable_list<Record>::merge_sort()
-/*
-Post: The entries of the sortable list have been rearranged so that
-their keys are sorted into nondecreasing order.
-Uses: The linked List implementation of Chapter 6 and recursive_merge_sort.
-*/
+
+//Post: The entries of the sortable list have been rearranged so that
+//their keys are sorted into nondecreasing order.
+//Uses: The linked List implementation of Chapter 6 and recursive_merge_sort.
+
 {
 	recursive_merge_sort(head); // Mikä tämä head????
 }
 
 template <class Record>
 void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
-/*
-Post: The nodes referenced by sub_list have been rearranged so that their
-keys are sorted into nondecreasing order.  The pointer parameter
-sub_list is reset to point at the node containing the smallest key.
-Uses: The linked List implementation of Chapter 6;
-the functions divide_from, merge, and recursive_merge_sort.
-*/
+
+//Post: The nodes referenced by sub_list have been rearranged so that their
+//keys are sorted into nondecreasing order.  The pointer parameter
+//sub_list is reset to point at the node containing the smallest key.
+//Uses: The linked List implementation of Chapter 6;
+//the functions divide_from, merge, and recursive_merge_sort.
+
 {
 	if (sub_list != NULL && sub_list->next != NULL) {
 		Node<Record> *second_half = divide_from(sub_list);
@@ -155,13 +155,13 @@ the functions divide_from, merge, and recursive_merge_sort.
 		sub_list = merge(sub_list, second_half);
 	}
 }
-/*
-Post: The list of nodes referenced by sub_list has been reduced
-to its first half, and a pointer to the first node in the second half
-of the sublist is returned.  If the sublist has an odd number of
-entries, then its first half will be one entry larger than its second.
-Uses: The linked List implementation of Chapter 6.
-*/
+
+//Post: The list of nodes referenced by sub_list has been reduced
+//to its first half, and a pointer to the first node in the second half
+//of the sublist is returned.  If the sublist has an odd number of
+//entries, then its first half will be one entry larger than its second.
+//Uses: The linked List implementation of Chapter 6.
+
 
 template <class Record>
 Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
@@ -184,14 +184,14 @@ Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
 	return second_half;
 }
 
-/*
-Pre:  first and second point to ordered lists of nodes.
-Post: A pointer to an ordered list of nodes is returned.
-The ordered list contains all entries that were referenced by
-first and second.  The original lists of nodes referenced
-by first and second are no longer available.
-Uses: Methods for Record class; the linked List implementation of Chapter 6.
-*/
+
+//Pre:  first and second point to ordered lists of nodes.
+//Post: A pointer to an ordered list of nodes is returned.
+//The ordered list contains all entries that were referenced by
+//first and second.  The original lists of nodes referenced
+//by first and second are no longer available.
+//Uses: Methods for Record class; the linked List implementation of Chapter 6.
+
 
 template <class Record>
 Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second)
@@ -221,3 +221,4 @@ Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *se
 		last_sorted->next = first;
 	return combined.next;
 }
+*/
