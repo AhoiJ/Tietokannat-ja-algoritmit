@@ -113,7 +113,6 @@
     <ClInclude Include="Key.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="ListMerge.h" />
-    <ClInclude Include="Merge.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeMerge.h" />
     <ClInclude Include="Ordered_list.h" />

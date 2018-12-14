@@ -7,7 +7,7 @@
 #include "Sortable_list.h"
 #include "ListMerge.h"
 #include "Sortable_list_merge.h"
-#include "Merge.h"
+
 
 using namespace std;
 
@@ -271,6 +271,7 @@ void main4()
 	Random random(false);
 	int record_check_size;
 	Record x;
+	int lineHelp = 0;
 
 	cout << "How many random records do you want?" << endl;
 	cin >> record_count;
@@ -292,22 +293,28 @@ void main4()
 
 	for (int i = 0; i < record_check_size; i++)
 	{
+		if (lineHelp == i * 10)
+			cout << endl;
 		records.retrieve(i, x);
-		cout << x.get_key_data() << endl;
+		cout << x.get_key_data() << " ";
+		lineHelp++;
 	}
-
+	lineHelp = 0;
 	records.insertion_sort(); // Sort the list
 //	records.selection_sort(); // Just for funsies
 
-	cout << "These are the first " << record_check_size
+	cout << endl << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
 
 	for (int i = 0; i < record_check_size; i++)
 	{
+		if (lineHelp == i * 10)
+			cout << endl;
 		records.retrieve(i, x);
 		cout << x.get_key_data() << endl;
+		lineHelp++;
 	}
-	
+	lineHelp = 0;
 }
 
 //	TEE TAMA ListMerge<Records>
@@ -322,6 +329,7 @@ void main5() {
 	Random random(false);
 	int record_check_size;
 	Record x;
+	int lineHelp = 0;
 
 	cout << "How many random records do you want?" << endl;
 	cin >> record_count; // user inputs records size
@@ -352,59 +360,27 @@ void main5() {
 
 	for (int i = 0; i < record_check_size; i++)
 	{
+		if (lineHelp == i * 10)
+			cout << endl;
 		records.retrieve(i, x);
-		cout << x.get_key_data() << endl;
+		cout << x.get_key_data() << " ";
+		lineHelp++;
 	}
-
+	lineHelp = 0;
 	// kutsu mergeä tässä
 	records.merge_sort();
 
-	cout << "These are the first " << record_check_size
+	cout << endl << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
 
 	for (int i = 0; i < record_check_size; i++)
 	{
+		if (lineHelp == i * 10)
+			cout << endl;
 		records.retrieve(i, x);
-		cout << x.get_key_data() << endl;
+		cout << x.get_key_data() << " ";
+		lineHelp++;
 	}
-	
-	/*
-	int record_count;
-	Sortable_listMerge<Record> records;
-	//List<Record> records;
-	//	int position;
-	int input_check = 0;
-	Search search;
-	Random random(false);
-	int record_check_size;
-	Record x;
-	struct Nodes* res = NULL;
-	struct Nodes* a = NULL;
+	lineHelp = 0;
 
-
-	cout << "How many random records do you want?" << endl;
-	cin >> record_count; // user inputs records size
-	do {
-		cout << "How many records do you want shown?" << endl;
-		cin >> record_check_size; // shown records size
-		  // Input check 
-		if (record_check_size > record_count || record_check_size < 0)
-			cout << "Input is not correct, size must be less than record amount and more than 0" << endl;
-	} while (record_check_size > record_count || record_check_size < 0);
-
-	for (int i = 0; i < record_count; i++) {
-		int target_int = random.random_integer(0, record_count * 10);
-		push(&a, target_int);
-	}
-
-	for (int i = 0; i < record_check_size; i++) {
-		cout << a->data << " ";
-		a->next;
-	}
-	system("pause");
-	printList(a);
-	MergeSort(&a);
-	printf("Sorted List is: \n");
-	printList(a);
-	*/
 }
