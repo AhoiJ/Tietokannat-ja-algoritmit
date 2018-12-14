@@ -48,6 +48,15 @@
     <ClInclude Include="ListMerge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sortable_list_merge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeMerge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Merge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ordered_list.cpp">

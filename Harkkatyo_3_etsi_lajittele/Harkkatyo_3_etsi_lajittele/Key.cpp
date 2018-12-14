@@ -48,7 +48,7 @@ int Key::the_key() const
 {
 	return key;
 }
-
+/*
 void Key::operator = (const Key &original)
 {
 	Key::assignments++;
@@ -59,3 +59,4 @@ ostream& operator << (ostream& os, const Key& k)
 {
 	return os << k.the_key();
 }
+*/

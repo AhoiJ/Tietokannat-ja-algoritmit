@@ -8,11 +8,11 @@ class Key {
 
 public:
 	static int comparisons;
-	static int assignments;
+	//static int assignments;
 	Key(int x = 0);
 	int the_key() const;
 
-	void operator = (const Key &original);
+	//void operator = (const Key &original);
 };
 
 bool operator ==(const Key &x, const Key &y);
@@ -21,4 +21,4 @@ bool operator <(const Key &x, const Key &y);
 bool operator >=(const Key &x, const Key &y);
 bool operator <=(const Key &x, const Key &y);
 bool operator !=(const Key &x, const Key &y);
-ostream& operator << (ostream& os, const Key& k);
+//ostream& operator << (ostream& os, const Key& k);

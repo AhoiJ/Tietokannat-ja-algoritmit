@@ -1,36 +1,35 @@
 #pragma once
-#include <iostream>
-#include "Record.h"
-#include "Node.h"
 
-using namespace std;
+#include "ListMerge.h"
 
 template <class Record>
-class Sortable_list :public List<Record> {
+class Sortable_list_merge :public ListMerge<Record> {
 public:
-	Sortable_list();
 	void insertion_sort();
-	//void selection_sort();
-	//int max_key(int low, int high);
-	//void swap(int low, int high);
-	//void Sortable_list<Record>::merge_sort();
-	//void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list);
-	//Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list);
-	//Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second);
+	void selection_sort();
+	void merge_sort();
+	
+	NodeMerge<Record> *Sortable_list_merge<Record>::divide_from(NodeMerge<Record> *sub_list);
+	NodeMerge<Record> *Sortable_list_merge<Record>::merge(NodeMerge<Record> *first, NodeMerge<Record> *second);
+	
 
 private: //  Add prototypes for auxiliary functions here.
+	int max_key(int low, int high);
+	void swap(int low, int high);
+	void recursive_merge_sort(NodeMerge<Record> *&sub_list);
 
 };
 
+
 template <class Record>
-void Sortable_list<Record>::insertion_sort()
+void Sortable_list_merge<Record>::insertion_sort()
 /*
 Post: The entries of the Sortable_list have been rearranged so that
 the keys in all the entries are sorted into nondecreasing order.
 Uses: Methods for the class Record; the linked List implementation of Chapter 6.
 */
 {
-	Node <Record> *first_unsorted,  //  the first unsorted node to be inserted
+	NodeMerge <Record> *first_unsorted,  //  the first unsorted node to be inserted
 		*last_sorted,     //  tail of the sorted sublist
 		*local_current,         //  used to traverse the sorted sublist
 		*trailing;        //  one position behind current
@@ -72,20 +71,10 @@ Uses: Methods for the class Record; the linked List implementation of Chapter 6.
 	}
 }
 
-template<class Record>
-inline Sortable_list<Record>::Sortable_list()
-{
 
-}
 
-/*
 template <class Record>
-void Sortable_list<Record>::selection_sort()
-
-//Post: The entries of the Sortable_list have been rearranged so that
-//the keys in all the entries are sorted into nondecreasing order.
-//Uses: max_key, swap.
-
+void Sortable_list_merge<Record>::selection_sort()
 {
 	for (int position = count - 1; position > 0; position--) {
 		int max = max_key(0, position);
@@ -95,51 +84,44 @@ void Sortable_list<Record>::selection_sort()
 
 
 template <class Record>
-int Sortable_list<Record>::max_key(int low, int high)
-
-//Pre:  low and high are valid positions in the Sortable_list and low <= high.
-//Post: The position of the entry between low and high with the largest
-//key is returned.
-//Uses: The class Record, the contiguous List implementation of Chapter 6.
-
+int Sortable_list_merge<Record>::max_key(int low, int high)
+/*
+Pre:  low and high are valid positions in the Sortable_list and low <= high.
+Post: The position of the entry between low and high with the largest
+key is returned.
+Uses: The class Record, the contiguous List implementation of Chapter 6.
+*/
 {
 	int largest, current;
 	largest = low;
 	for (current = low + 1; current <= high; current++)
-		if (this->entry[largest] < this->entry[current])
+		if (entry[largest] < entry[current])
 			largest = current;
 	return largest;
 }
 
 template <class Record>
-void Sortable_list<Record>::swap(int low, int high)
-
-//Pre:  low and high are valid positions in the Sortable_list.
-//Post: The entry at position low is swapped with the entry at position high.
-//Uses: The contiguous List implementation of Chapter 6.
-
+void Sortable_list_merge<Record>::swap(int low, int high)
 {
 	Record temp;
 	temp = entry[low];
 	entry[low] = entry[high];
 	entry[high] = temp;
 }
-*/
-/*
+
+
 // MERGESORT
 template <class Record>
-void Sortable_list<Record>::merge_sort()
-
+void Sortable_list_merge<Record>::merge_sort()
 //Post: The entries of the sortable list have been rearranged so that
 //their keys are sorted into nondecreasing order.
 //Uses: The linked List implementation of Chapter 6 and recursive_merge_sort.
-
 {
-	recursive_merge_sort(head); // Mikä tämä head????
+	recursive_merge_sort(this->head); // Mikä tämä head????
 }
 
 template <class Record>
-void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
+void Sortable_list_merge<Record>::recursive_merge_sort(NodeMerge<Record> *&sub_list)
 
 //Post: The nodes referenced by sub_list have been rearranged so that their
 //keys are sorted into nondecreasing order.  The pointer parameter
@@ -149,7 +131,7 @@ void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
 
 {
 	if (sub_list != NULL && sub_list->next != NULL) {
-		Node<Record> *second_half = divide_from(sub_list);
+		NodeMerge<Record> *second_half = divide_from(sub_list);
 		recursive_merge_sort(sub_list);
 		recursive_merge_sort(second_half);
 		sub_list = merge(sub_list, second_half);
@@ -164,9 +146,9 @@ void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
 
 
 template <class Record>
-Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
+NodeMerge<Record> *Sortable_list_merge<Record>::divide_from(NodeMerge<Record> *sub_list)
 {
-	Node<Record> *position, //  traverses the entire list
+	NodeMerge<Record> *position, //  traverses the entire list
 		*midpoint, //  moves at half speed of position to midpoint
 		*second_half;
 
@@ -194,10 +176,10 @@ Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
 
 
 template <class Record>
-Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second)
+NodeMerge<Record> *Sortable_list_merge<Record>::merge(NodeMerge<Record> *first, NodeMerge<Record> *second)
 {
-	Node <Record> *last_sorted; //  points to the last node of sorted list
-	Node <Record> combined;     //  dummy first node, points to merged list
+	NodeMerge<Record> *last_sorted; //  points to the last node of sorted list
+	NodeMerge<Record> combined;     //  dummy first node, points to merged list
 
 	last_sorted = &combined;
 	while (first != NULL && second != NULL) { //  Attach node with smaller key
@@ -214,11 +196,10 @@ Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *se
 	}
 
 	//  After one list ends, attach the remainder of the other.
-	if (first == NULL) {
+	if (first == NULL)
 		last_sorted->next = second;
-	}
 	else
 		last_sorted->next = first;
 	return combined.next;
 }
-*/
+

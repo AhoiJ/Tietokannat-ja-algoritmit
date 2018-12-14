@@ -1,6 +1,7 @@
 #pragma once
-#include "Node.h"
+#include "NodeMerge.h"
 #include "Utility.h"
+#include "Record.h"
 
 typedef int index;
 const int max_list = 1000;
@@ -11,7 +12,7 @@ class ListMerge
 public:
 	ListMerge();
 
-	//int size() const;
+	int size() const;
 	//bool full() const;
 	//bool empty() const;
 	void clear();
@@ -27,24 +28,41 @@ public:
 	
 	// Mergesort
 	Error_code ListMerge<List_entry>::insertM(int position, const List_entry &x);
-	Node<List_entry> *ListMerge<List_entry>::set_pos(int position) const;
-	void ListMerge<Record>::merge_sort();
-	Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second);
-	Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list);
-	void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list);
-	// Kusee koska funktioiden sisällä kutsuttu list eikä ListMerge funtioita.
+	NodeMerge<List_entry> *ListMerge<List_entry>::set_pos(int position) const;
+
+	
 
 protected:
 	int count;
+	//List_entry entry[max_list];
 	mutable int current_position;
-	Node<List_entry> *head;
-	mutable Node<List_entry> *current;
+	NodeMerge<List_entry> *head;
+	mutable NodeMerge<List_entry> *current;
 
 	//  The following auxiliary function is used to locate list positions
-	Node<List_entry> *set_position(int position) const;
+	NodeMerge<List_entry> *set_position(int position) const;
 
 };
 
+template<class List_entry>
+inline int ListMerge<List_entry>::size() const
+{
+	return count;
+}
+
+template <class List_entry>
+Error_code ListMerge<List_entry>::retrieve(int position, List_entry &x) const
+{
+	NodeMerge<List_entry> *current;
+	if (position < 0 || position >= count)
+	{
+		return utility_range_error;
+	}
+	current = set_position(position);
+	set_position(position);
+	x = current->entry;
+	return success;
+}
 
 template <class List_entry>
 Error_code ListMerge<List_entry>::insert(int position, const List_entry &x)
@@ -58,13 +76,14 @@ Error_code ListMerge<List_entry>::insert(int position, const List_entry &x)
 {
 	if (position < 0 || position > count)
 		return utility_range_error;
-	Node<List_entry> *new_node, *previous, *following;
+	NodeMerge<List_entry> *new_node, *previous, *following;
+	previous = NULL;
 	if (position > 0) {
-		previous = set_position(position - 1);
+		previous = set_position(position - 1); // vaihdettu 1 rivi ylös
 		following = previous->next;
 	}
 	else following = head;
-	new_node = new Node<List_entry>(x, following);
+	new_node = new NodeMerge<List_entry>(x, following);
 	if (new_node == NULL)
 		return overflow;
 	if (position == 0)
@@ -77,13 +96,13 @@ Error_code ListMerge<List_entry>::insert(int position, const List_entry &x)
 
 
 template <class List_entry>
-Node<List_entry> *ListMerge<List_entry>::set_position(int position) const
+NodeMerge<List_entry> *ListMerge<List_entry>::set_position(int position) const
 
 //Pre:  position is a valid position in the List; 0 <= position < count.
 //Post: Returns a pointer to the Node in position.
 
 {
-	Node<List_entry> *q = head;
+	NodeMerge<List_entry> *q = head;
 	for (int i = 0; i < position; i++) q = q->next;
 	return q;
 }
@@ -108,8 +127,6 @@ ListMerge<List_entry>::ListMerge()
 	this->head = NULL;
 	this->current = NULL;
 }
-
-
 
 /*
 //		INDEX JUTTUJA
@@ -160,13 +177,13 @@ void ListMerge<List_entry>::delete_node(index old_index)
 // Mergesort
 
 template <class List_entry>
-Node<List_entry> *ListMerge<List_entry>::set_pos(int position) const
+NodeMerge<List_entry> *ListMerge<List_entry>::set_pos(int position) const
 
 //Pre:  position is a valid position in the List; 0 <= position < count.
 //Post: Returns a pointer to the Node in position.
 
 {
-	Node<List_entry> *q = head;
+	NodeMerge<List_entry> *q = head;
 	for (int i = 0; i < position; i++) q = q->next;
 	return q;
 }
@@ -183,14 +200,14 @@ Error_code ListMerge<List_entry>::insertM(int position, const List_entry &x)
 
 {
 	if (position < 0 || position > count)
-		return range_error;
-	Node<List_entry> *new_node, *previous, *following;
+		return utility_range_error;
+	NodeMerge<List_entry> *new_node, *previous, *following;
 	if (position > 0) {
 		previous = set_position(position - 1);
 		following = previous->next;
 	}
 	else following = head;
-	new_node = new Node<List_entry>(x, following);
+	new_node = new NodeMerge<List_entry>(x, following);
 	if (new_node == NULL)
 		return overflow;
 	if (position == 0)
@@ -200,7 +217,7 @@ Error_code ListMerge<List_entry>::insertM(int position, const List_entry &x)
 	count++;
 	return success;
 }
-
+/*
 template <class Record>
 void ListMerge<Record>::merge_sort()
 //Post: The entries of the sortable list have been rearranged so that
@@ -211,7 +228,7 @@ void ListMerge<Record>::merge_sort()
 }
 
 template <class Record>
-void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
+void ListMerge<Record>::recursive_merge_sort(Node<Record> *&sub_list) // Ei sortable list
 
 //Post: The nodes referenced by sub_list have been rearranged so that their
 //keys are sorted into nondecreasing order.  The pointer parameter
@@ -236,7 +253,7 @@ void Sortable_list<Record>::recursive_merge_sort(Node<Record> *&sub_list)
 
 
 template <class Record>
-Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
+Node<Record> *ListMerge<Record>::divide_from(Node<Record> *sub_list)
 {
 	Node<Record> *position, //  traverses the entire list
 		*midpoint, //  moves at half speed of position to midpoint
@@ -266,7 +283,7 @@ Node<Record> *Sortable_list<Record>::divide_from(Node<Record> *sub_list)
 
 
 template <class Record>
-Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *second)
+Node<Record> *ListMerge<Record>::merge(Node<Record> *first, Node<Record> *second)
 {
 	Node <Record> *last_sorted; //  points to the last node of sorted list
 	Node <Record> combined;     //  dummy first node, points to merged list
@@ -293,3 +310,4 @@ Node<Record> *Sortable_list<Record>::merge(Node<Record> *first, Node<Record> *se
 		last_sorted->next = first;
 	return combined.next;
 }
+*/

@@ -6,6 +6,8 @@
 #include "Timer.h"
 #include "Sortable_list.h"
 #include "ListMerge.h"
+#include "Sortable_list_merge.h"
+#include "Merge.h"
 
 using namespace std;
 
@@ -295,7 +297,7 @@ void main4()
 	}
 
 	records.insertion_sort(); // Sort the list
-	records.selection_sort(); // Just for funsies
+//	records.selection_sort(); // Just for funsies
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
@@ -310,8 +312,9 @@ void main4()
 
 //	TEE TAMA ListMerge<Records>
 void main5() {
+	
 	int record_count;
-	ListMerge <Record> records;
+	Sortable_list_merge<Record> records;
 	//List<Record> records;
 	//	int position;
 	int input_check = 0;
@@ -353,7 +356,8 @@ void main5() {
 		cout << x.get_key_data() << endl;
 	}
 
-	records.merge_sort(); 
+	// kutsu mergeä tässä
+	records.merge_sort();
 
 	cout << "These are the first " << record_check_size
 		<< " elements of record array after sorting." << endl;
@@ -363,5 +367,44 @@ void main5() {
 		records.retrieve(i, x);
 		cout << x.get_key_data() << endl;
 	}
+	
+	/*
+	int record_count;
+	Sortable_listMerge<Record> records;
+	//List<Record> records;
+	//	int position;
+	int input_check = 0;
+	Search search;
+	Random random(false);
+	int record_check_size;
+	Record x;
+	struct Nodes* res = NULL;
+	struct Nodes* a = NULL;
 
+
+	cout << "How many random records do you want?" << endl;
+	cin >> record_count; // user inputs records size
+	do {
+		cout << "How many records do you want shown?" << endl;
+		cin >> record_check_size; // shown records size
+		  // Input check 
+		if (record_check_size > record_count || record_check_size < 0)
+			cout << "Input is not correct, size must be less than record amount and more than 0" << endl;
+	} while (record_check_size > record_count || record_check_size < 0);
+
+	for (int i = 0; i < record_count; i++) {
+		int target_int = random.random_integer(0, record_count * 10);
+		push(&a, target_int);
+	}
+
+	for (int i = 0; i < record_check_size; i++) {
+		cout << a->data << " ";
+		a->next;
+	}
+	system("pause");
+	printList(a);
+	MergeSort(&a);
+	printf("Sorted List is: \n");
+	printList(a);
+	*/
 }
