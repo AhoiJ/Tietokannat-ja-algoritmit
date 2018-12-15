@@ -1,3 +1,7 @@
+/*
+Search.h
+=============
+*/
 #pragma once
 #include "Record.h"
 #include "List.h"

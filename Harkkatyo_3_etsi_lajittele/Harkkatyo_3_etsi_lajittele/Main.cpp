@@ -1,3 +1,9 @@
+
+/*	
+	MAIN.cpp
+=============
+*/
+
 #include <iostream>
 #include "List.h"
 #include "Utility.h"
@@ -7,7 +13,6 @@
 #include "Sortable_list.h"
 #include "ListMerge.h"
 #include "Sortable_list_merge.h"
-
 
 using namespace std;
 
@@ -27,7 +32,11 @@ int main()
 	Random random(false);
 
 	while (input_check != 1) {
-		cout << "Select which version of program to run (1 , 2, 3 or 4)" << endl;
+		cout << "Select which version of program to run." << endl
+			<< "1. Sequential search." << endl
+			<< "2. Binary search." << endl
+			<< "3. Insertion sort." << endl
+			<< "4. Mergesort." << endl;
 
 		cin >> user_input;
 		if (user_input == 1 || user_input == 2 || user_input == 3 || user_input == 4)
@@ -311,7 +320,7 @@ void main4()
 		if (lineHelp == i * 10)
 			cout << endl;
 		records.retrieve(i, x);
-		cout << x.get_key_data() << endl;
+		cout << x.get_key_data() << " ";
 		lineHelp++;
 	}
 	lineHelp = 0;

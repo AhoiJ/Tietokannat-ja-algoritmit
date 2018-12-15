@@ -1,3 +1,8 @@
+/*
+Random.h
+=============
+*/
+
 #pragma once
 
 class Random {

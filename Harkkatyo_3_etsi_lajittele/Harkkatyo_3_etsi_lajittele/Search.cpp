@@ -1,3 +1,7 @@
+/*
+Search.cpp
+=============
+*/
 #include "Search.h"
 
 Search::Search()

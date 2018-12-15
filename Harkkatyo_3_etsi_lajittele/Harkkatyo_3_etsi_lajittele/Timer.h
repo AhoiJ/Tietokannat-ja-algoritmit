@@ -1,3 +1,7 @@
+/*
+Timer.h
+=============
+*/
 #pragma once
 #include <time.h>
 
